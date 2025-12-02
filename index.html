@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KT 가우리엔터프라이즈</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
+    <script type="text/javascript">
+        (function(){
+            // ✅ 사장님 공개키
+            emailjs.init("oM5C3k8SXXow-GN5v");
+        })();
+    </script>
+
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+        body { font-family: 'Pretendard', sans-serif; }
+        .hidden { display: none; }
+        .fade-in { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 pb-20 md:pb-0">
+
+    <!-- [1] 고객용 화면 -->
+    <div id="user-page" class="mx-auto max-w-md bg-white shadow-2xl min-h-screen relative">
+        
+        <!-- 상단 배너 -->
+        <div class="relative h-80 bg-slate-900 text-white overflow-hidden">
+            <!-- [안전장치] onerror: 사진 주소가 틀리면 기본 이미지가 나옵니다 -->
+            <img id="hero-image" src="" onerror="this.src='https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&q=80&w=1000'" class="absolute inset-0 h-full w-full object-cover opacity-60 transition-transform duration-[30s] hover:scale-110" alt="매장 배경">
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
+            <div class="relative z-10 flex h-full flex-col justify-end p-6 pb-10 fade-in">
+                <div class="mb-2 inline-flex self-start rounded bg-cyan-500 px-3 py-1 text-xs font-bold shadow-md">KT 공식인증 대리점</div>
+                <h1 id="main-title" class="text-3xl font-bold leading-tight drop-shadow-lg"></h1>
+                <p id="main-subtitle" class="mt-2 text-cyan-200 font-medium text-sm"></p>
+            </div>
+        </div>
+
+        <!-- 통계 -->
+        <div class="grid grid-cols-3 divide-x divide-slate-100 border-b bg-white p-4 text-center shadow-sm relative z-20 -mt-6 mx-4 rounded-xl fade-in">
+            <div><div class="text-lg font-bold text-cyan-500">6개</div><div class="text-xs text-slate-500">직영 매장</div></div>
+            <div><div class="text-lg font-bold text-cyan-500">100%</div><div class="text-xs text-slate-500">정품 개통</div></div>
+            <div><div class="text-lg font-bold text-cyan-500">MAX</div><div class="text-xs text-slate-500">지원금 보장</div></div>
+        </div>
+
+        <!-- 상품 진열 -->
+        <div class="p-6">
+            <h2 class="mb-4 text-xl font-bold flex items-center"><i data-lucide="smartphone" class="mr-2 text-cyan-500 w-5"></i> 화제의 최신 모델</h2>
+            <div class="grid grid-cols-2 gap-3">
+                <div class="group relative overflow-hidden rounded-xl bg-slate-100 shadow-sm transition hover:shadow-md">
+                    <img id="img-prod1" src="" onerror="this.src='https://placehold.co/600x800?text=No+Image'" class="w-full aspect-[4/5] object-cover" alt="상품1">
+                    <div id="badge-prod1" class="absolute top-2 left-2 rounded bg-red-500 px-1.5 py-0.5 text-[10px] font-bold text-white shadow-sm"></div>
+                    <div class="absolute bottom-0 w-full p-3 bg-gradient-to-t from-black/80 to-transparent text-white">
+                        <div id="title-prod1" class="font-bold text-sm"></div>
+                    </div>
+                </div>
+                <div class="group relative overflow-hidden rounded-xl bg-slate-100 shadow-sm transition hover:shadow-md">
+                    <img id="img-prod2" src="" onerror="this.src='https://placehold.co/600x800?text=No+Image'" class="w-full aspect-[4/5] object-cover" alt="상품2">
+                    <div id="badge-prod2" class="absolute top-2 left-2 rounded bg-orange-500 px-1.5 py-0.5 text-[10px] font-bold text-white shadow-sm"></div>
+                    <div class="absolute bottom-0 w-full p-3 bg-gradient-to-t from-black/80 to-transparent text-white">
+                        <div id="title-prod2" class="font-bold text-sm"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 상담 신청 폼 -->
+        <div id="consult-section" class="p-6 pb-10 bg-white">
+            <div class="rounded-2xl bg-slate-900 p-6 text-white shadow-xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-cyan-500/20 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
+                <h3 class="mb-4 text-xl font-bold flex items-center relative z-10">
+                    <i data-lucide="gift" class="mr-2 text-cyan-400 w-5"></i> 맞춤 혜택 조회
+                </h3>
+                
+                <form id="consultForm" class="space-y-4 relative z-10" onsubmit="submitForm(event)">
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="text" id="name" name="name" placeholder="이름" required class="p-3 rounded bg-slate-700/50 border border-slate-600 text-sm text-white w-full focus:outline-none focus:border-cyan-500">
+                        <input type="tel" id="phone" name="phone" placeholder="연락처" required class="p-3 rounded bg-slate-700/50 border border-slate-600 text-sm text-white w-full focus:outline-none focus:border-cyan-500">
+                    </div>
+
+                    <select id="branch" name="branch" required class="w-full p-3 rounded bg-slate-700/50 border border-slate-600 text-sm text-white focus:outline-none focus:border-cyan-500">
+                        <option value="" disabled selected>상담받을 지점 선택 (필수)</option>
+                        <option value="세종 소담점">세종 소담점</option>
+                        <option value="세종 종촌점">세종 종촌점</option>
+                        <option value="대전 목동점">대전 목동점</option>
+                        <option value="대전 복수점">대전 복수점</option>
+                        <option value="대전 용전점">대전 용전점</option>
+                        <option value="대전 반석점">대전 반석점</option>
+                    </select>
+
+                    <div class="space-y-2 pt-2 border-t border-slate-700">
+                        <div class="text-xs text-cyan-400 font-bold">현재 통신사</div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <select id="mobile_carrier" name="mobile_carrier" required class="p-2 rounded bg-slate-700/50 border border-slate-600 text-xs text-white w-full">
+                                <option value="">휴대폰 선택</option>
+                                <option>SKT</option><option>KT</option><option>LG U+</option><option>알뜰폰</option>
+                            </select>
+                            <select id="internet_carrier" name="internet_carrier" required class="p-2 rounded bg-slate-700/50 border border-slate-600 text-xs text-white w-full">
+                                <option value="">인터넷 선택</option>
+                                <option>SKT</option><option>KT</option><option>LG U+</option><option>알뜰폰</option><option>없음</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center text-xs text-slate-400">
+                        <input type="checkbox" id="agree" required class="mr-2 accent-cyan-500">
+                        <label for="agree">개인정보 수집 및 상담 활용에 동의합니다.</label>
+                    </div>
+
+                    <button type="submit" id="submit-btn" class="w-full bg-cyan-500 hover:bg-cyan-400 py-4 rounded font-bold text-white mt-2 transition shadow-lg transform active:scale-95">상담 신청하기</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- 하단 바 -->
+        <div class="fixed bottom-0 left-0 right-0 z-50 flex h-16 border-t bg-white shadow-lg md:hidden">
+            <a id="tel-link" href="#" class="flex-1 flex flex-col items-center justify-center text-slate-600 bg-slate-50 active:bg-slate-200">
+                <i data-lucide="phone" class="w-5 mb-0.5"></i>
+                <span class="text-[10px] font-bold">전화 상담</span>
+            </a>
+            <button onclick="document.getElementById('consult-section').scrollIntoView({behavior:'smooth'})" class="flex-[2] bg-cyan-500 text-white font-bold text-lg flex items-center justify-center active:bg-cyan-600">
+                지원금 조회하기 <i data-lucide="chevron-right" class="ml-1 w-5"></i>
+            </button>
+        </div>
+
+        <!-- 관리자 버튼 -->
+        <button onclick="toggleAdmin()" class="fixed bottom-20 right-4 z-50 bg-slate-800 text-white p-3 rounded-full shadow-lg opacity-50 hover:opacity-100 transition">
+            <i data-lucide="settings" class="w-5 h-5"></i>
+        </button>
+    </div>
+
+    <!-- 관리자 로그인 모달 -->
+    <div id="admin-modal" class="hidden fixed inset-0 z-[60] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+        <div class="bg-white p-8 rounded-xl w-full max-w-sm shadow-2xl animate-in fade-in">
+            <div class="text-center mb-6">
+                <h2 class="text-xl font-bold">관리자 로그인</h2>
+            </div>
+            <input type="text" id="admin-id" placeholder="아이디" class="w-full border p-3 rounded mb-3">
+            <input type="password" id="admin-pw" placeholder="비밀번호" class="w-full border p-3 rounded mb-6">
+            <div class="flex gap-2">
+                <button onclick="toggleAdmin()" class="flex-1 bg-slate-100 py-3 rounded font-bold">취소</button>
+                <button onclick="adminLogin()" class="flex-1 bg-slate-900 text-white py-3 rounded font-bold">로그인</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 관리자 대시보드 -->
+    <div id="admin-dashboard" class="hidden min-h-screen bg-slate-100 p-4">
+        <div class="max-w-4xl mx-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-2xl font-bold text-slate-800 flex items-center"><i data-lucide="layout-dashboard" class="mr-2"></i> 관리자 페이지</h1>
+                <div class="flex gap-2">
+                    <button onclick="switchTab('leads')" id="btn-leads" class="bg-slate-800 text-white px-4 py-2 rounded text-sm font-bold shadow-md transition">접수 현황</button>
+                    <button onclick="switchTab('settings')" id="btn-settings" class="bg-slate-200 text-slate-600 px-4 py-2 rounded text-sm font-bold shadow-sm transition">사이트 설정</button>
+                    <button onclick="location.reload()" class="bg-red-500 text-white px-4 py-2 rounded text-sm ml-2 shadow-md">나가기</button>
+                </div>
+            </div>
+
+            <!-- 탭 1: 접수 현황 -->
+            <div id="tab-leads" class="bg-white rounded-lg shadow overflow-hidden animate-in fade-in">
+                <div class="p-4 border-b bg-slate-50 text-sm text-slate-500 flex justify-between items-center">
+                    <span>* 고객 문의 내역 (최신순)</span>
+                    <button onclick="if(confirm('전체 삭제하시겠습니까?')){localStorage.removeItem('kt_leads'); loadLeads();}" class="text-xs text-red-400 hover:text-red-600 font-bold border border-red-200 px-2 py-1 rounded">내역 초기화</button>
+                </div>
+                <div id="leads-list" class="divide-y text-sm max-h-[70vh] overflow-y-auto no-scrollbar">
+                    <div class="p-8 text-center text-slate-400">데이터를 불러오는 중...</div>
+                </div>
+            </div>
+
+            <!-- 사이트 설정 탭 -->
+            <div id="tab-settings" class="hidden bg-white rounded-lg shadow p-6 space-y-8 animate-in fade-in">
+                
+                <!-- 추천 방법: ImgBB -->
+                <div class="bg-blue-50 p-4 rounded-lg border border-blue-100 mb-6">
+                    <h3 class="font-bold text-blue-800 text-sm mb-2 flex items-center">✅ 사진 무료 호스팅 (회원가입 X)</h3>
+                    <p class="text-xs text-slate-600 mb-3">내 컴퓨터의 사진을 인터넷 주소(URL)로 바꿔줍니다.</p>
+                    
+                    <a href="https://ko.imgbb.com/" target="_blank" class="inline-flex items-center bg-blue-600 text-white px-4 py-2 rounded text-sm font-bold hover:bg-blue-700 transition shadow-sm w-full justify-center">
+                        <i data-lucide="image-plus" class="w-4 h-4 mr-2"></i> 사진 업로드하러 가기
+                    </a>
+                    
+                    <div class="mt-3 text-[11px] text-slate-600 bg-white p-3 rounded border border-blue-200 leading-relaxed">
+                        <strong class="text-blue-700">[가장 쉬운 방법]</strong><br>
+                        1. 위 버튼 클릭 → <strong>'업로드 시작'</strong> → 사진 선택 → <strong>'업로드'</strong><br>
+                        2. 복잡한 코드 복사하지 마시고!<br>
+                        3. <strong>화면에 뜬 사진 위에서 마우스 우클릭</strong> 하세요.<br>
+                        4. <strong>'이미지 주소 복사'</strong> (또는 '이미지 링크 복사')를 누르세요.<br>
+                        5. 그 주소를 아래 칸에 붙여넣기 하면 끝! (주소가 .jpg, .png 등으로 끝나야 합니다)
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <h2 class="text-lg font-bold border-b pb-2 flex items-center text-slate-700">기본 정보</h2>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div><label class="block text-xs font-bold text-slate-500 mb-1">제목</label><input type="text" id="conf-title" class="w-full border p-2 rounded"></div>
+                        <div><label class="block text-xs font-bold text-slate-500 mb-1">부제목</label><input type="text" id="conf-subtitle" class="w-full border p-2 rounded"></div>
+                    </div>
+                    <div><label class="block text-xs font-bold text-slate-500 mb-1">배경 이미지 URL</label><input type="text" id="conf-heroImage" class="w-full border p-2 rounded" placeholder="https://..."></div>
+                    <div><label class="block text-xs font-bold text-slate-500 mb-1">전화번호</label><input type="text" id="conf-tel" class="w-full border p-2 rounded"></div>
+                </div>
+
+                <div class="space-y-6">
+                    <h2 class="text-lg font-bold border-b pb-2 flex items-center text-slate-700">상품 관리</h2>
+                    <div class="border rounded-lg p-4 bg-slate-50">
+                        <div class="font-bold text-sm mb-3">상품 1 (왼쪽)</div>
+                        <div class="grid grid-cols-2 gap-3 mb-3">
+                            <input type="text" id="conf-prod1-name" placeholder="상품명" class="border p-2 rounded text-sm">
+                            <input type="text" id="conf-prod1-badge" placeholder="배지" class="border p-2 rounded text-sm">
+                        </div>
+                        <input type="text" id="conf-prod1-img" placeholder="이미지 URL" class="w-full border p-2 rounded text-xs">
+                    </div>
+                    <div class="border rounded-lg p-4 bg-slate-50">
+                        <div class="font-bold text-sm mb-3">상품 2 (오른쪽)</div>
+                        <div class="grid grid-cols-2 gap-3 mb-3">
+                            <input type="text" id="conf-prod2-name" placeholder="상품명" class="border p-2 rounded text-sm">
+                            <input type="text" id="conf-prod2-badge" placeholder="배지" class="border p-2 rounded text-sm">
+                        </div>
+                        <input type="text" id="conf-prod2-img" placeholder="이미지 URL" class="w-full border p-2 rounded text-xs">
+                    </div>
+                </div>
+
+                <button onclick="saveConfig()" class="w-full bg-slate-900 text-white py-4 rounded-xl font-bold hover:bg-slate-800 transition shadow-lg">저장하기</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 스크립트 -->
+    <script type="module">
+        lucide.createIcons();
+
+        const DEFAULT_CONFIG = {
+            title: "KT 가우리<br>엔터프라이즈",
+            subtitle: "우리 동네 1등 혜택! 인터넷+TV+휴대폰 최대 지원",
+            heroImage: "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&q=80&w=2000",
+            telNumber: "010-0000-0000",
+            prod1Name: "Galaxy S25 Ultra", prod1Badge: "AI 번역 탑재", prod1Img: "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?auto=format&fit=crop&q=80&w=600",
+            prod2Name: "iPhone 17 Pro Max", prod2Badge: "New: 코믹스 오렌지", prod2Img: "https://images.unsplash.com/photo-1512054502232-10a0a035d672?auto=format&fit=crop&q=80&w=600"
+        };
+
+        function loadConfig() {
+            const config = JSON.parse(localStorage.getItem('kt_config')) || DEFAULT_CONFIG;
+            safeSetHTML('main-title', config.title); safeSetText('main-subtitle', config.subtitle); safeSetSrc('hero-image', config.heroImage);
+            const telLink = document.getElementById('tel-link'); if(telLink) telLink.href = 'tel:' + config.telNumber;
+            safeSetText('title-prod1', config.prod1Name); safeSetText('badge-prod1', config.prod1Badge); safeSetSrc('img-prod1', config.prod1Img);
+            safeSetText('title-prod2', config.prod2Name); safeSetText('badge-prod2', config.prod2Badge); safeSetSrc('img-prod2', config.prod2Img);
+
+            safeSetValue('conf-title', config.title); safeSetValue('conf-subtitle', config.subtitle); safeSetValue('conf-heroImage', config.heroImage); safeSetValue('conf-tel', config.telNumber);
+            safeSetValue('conf-prod1-name', config.prod1Name); safeSetValue('conf-prod1-badge', config.prod1Badge); safeSetValue('conf-prod1-img', config.prod1Img);
+            safeSetValue('conf-prod2-name', config.prod2Name); safeSetValue('conf-prod2-badge', config.prod2Badge); safeSetValue('conf-prod2-img', config.prod2Img);
+        }
+
+        window.saveConfig = function() {
+            const newConfig = {
+                title: document.getElementById('conf-title').value,
+                subtitle: document.getElementById('conf-subtitle').value,
+                heroImage: document.getElementById('conf-heroImage').value,
+                telNumber: document.getElementById('conf-tel').value,
+                prod1Name: document.getElementById('conf-prod1-name').value,
+                prod1Badge: document.getElementById('conf-prod1-badge').value,
+                prod1Img: document.getElementById('conf-prod1-img').value,
+                prod2Name: document.getElementById('conf-prod2-name').value,
+                prod2Badge: document.getElementById('conf-prod2-badge').value,
+                prod2Img: document.getElementById('conf-prod2-img').value
+            };
+            localStorage.setItem('kt_config', JSON.stringify(newConfig));
+            alert("✅ 저장되었습니다!");
+            loadConfig();
+        }
+
+        function safeSetHTML(id, val) { const el = document.getElementById(id); if(el) el.innerHTML = val; }
+        function safeSetText(id, val) { const el = document.getElementById(id); if(el) el.innerText = val; }
+        function safeSetSrc(id, val) { const el = document.getElementById(id); if(el) el.src = val; }
+        function safeSetValue(id, val) { const el = document.getElementById(id); if(el) el.value = val; }
+
+        loadConfig();
+
+        window.submitForm = function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submit-btn');
+            btn.innerText = "전송 중...";
+            btn.disabled = true;
+            
+            const formParams = {
+                name: document.getElementById('name').value,
+                phone: document.getElementById('phone').value,
+                branch: document.getElementById('branch').value,
+                mobile_carrier: document.getElementById('mobile_carrier').value,
+                internet_carrier: document.getElementById('internet_carrier').value,
+                date: new Date().toLocaleString()
+            };
+
+            const serviceID = "service_tje5nks"; 
+            const templateID = "template_g02rutc"; 
+
+            emailjs.send(serviceID, templateID, formParams)
+                .then(() => {
+                    alert("접수되었습니다! 담당자가 곧 연락드립니다.");
+                    saveLocally(formParams);
+                    document.getElementById('consultForm').reset();
+                })
+                .catch((err) => {
+                    alert("전송 실패: " + JSON.stringify(err));
+                })
+                .finally(() => {
+                    btn.innerText = "상담 신청하기";
+                    btn.disabled = false;
+                });
+        }
+
+        function saveLocally(data) {
+            let leads = JSON.parse(localStorage.getItem('kt_leads') || '[]');
+            leads.unshift(data);
+            localStorage.setItem('kt_leads', JSON.stringify(leads));
+        }
+
+        window.toggleAdmin = function() { document.getElementById('admin-modal').classList.toggle('hidden'); }
+        window.switchTab = function(tabName) {
+            if (tabName === 'leads') {
+                document.getElementById('tab-leads').classList.remove('hidden'); document.getElementById('tab-settings').classList.add('hidden');
+                document.getElementById('btn-leads').classList.replace('bg-slate-200', 'bg-slate-800'); document.getElementById('btn-leads').classList.replace('text-slate-600', 'text-white');
+                document.getElementById('btn-settings').classList.replace('bg-slate-800', 'bg-slate-200'); document.getElementById('btn-settings').classList.replace('text-white', 'text-slate-600');
+            } else {
+                document.getElementById('tab-leads').classList.add('hidden'); document.getElementById('tab-settings').classList.remove('hidden');
+                document.getElementById('btn-settings').classList.replace('bg-slate-200', 'bg-slate-800'); document.getElementById('btn-settings').classList.replace('text-slate-600', 'text-white');
+                document.getElementById('btn-leads').classList.replace('bg-slate-800', 'bg-slate-200'); document.getElementById('btn-leads').classList.replace('text-white', 'text-slate-600');
+            }
+        }
+
+        window.adminLogin = function() {
+            const id = document.getElementById('admin-id').value;
+            const pw = document.getElementById('admin-pw').value;
+            if(id === 'bbh3501' && pw === 'Ktkt7979!!') {
+                document.getElementById('user-page').classList.add('hidden');
+                document.getElementById('admin-modal').classList.add('hidden');
+                document.getElementById('admin-dashboard').classList.remove('hidden');
+                loadLeads(); loadConfig(); 
+            } else { alert('아이디/비번이 틀렸습니다.'); }
+        }
+
+        function loadLeads() {
+            const list = document.getElementById('leads-list');
+            const leads = JSON.parse(localStorage.getItem('kt_leads') || '[]');
+            if (leads.length === 0) { list.innerHTML = '<div class="p-12 text-center text-slate-400">데이터 없음</div>'; return; }
+            list.innerHTML = leads.map(l => `
+                <div class="p-4 hover:bg-slate-50 transition border-b last:border-0">
+                    <div class="flex justify-between mb-2"><span class="font-bold text-slate-800 text-lg">${l.name}</span><span class="text-xs text-slate-400 mt-1">${l.date}</span></div>
+                    <div class="flex items-center gap-2 mb-2"><span class="bg-cyan-100 text-cyan-700 px-2 py-0.5 rounded text-xs font-bold">📞 ${l.phone}</span><span class="bg-slate-100 text-slate-600 px-2 py-0.5 rounded text-xs">📍 ${l.branch}</span></div>
+                    <div class="text-xs text-slate-500 bg-slate-50 p-2 rounded border">📱 폰: ${l.mobile_carrier} &nbsp;|&nbsp; 🌐 넷: ${l.internet_carrier}</div>
+                </div>`).join('');
+        }
+    </script>
+</body>
+</html>
