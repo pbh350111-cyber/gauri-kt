@@ -339,7 +339,11 @@
 
         // 3. 설정 불러오기 및 화면 적용
         function loadConfig() {
-            const config = JSON.parse(localStorage.getItem('kt_config')) || DEFAULT_CONFIG;
+            // 데이터 보호: 기존 데이터가 깨졌거나 없을 경우 기본값 사용
+            let config = JSON.parse(localStorage.getItem('kt_config'));
+            if (!config || !config.branches) {
+                config = DEFAULT_CONFIG;
+            }
             
             safeSetHTML('main-title', config.title); 
             safeSetText('main-subtitle', config.subtitle); 
@@ -414,7 +418,10 @@
         window.togglePhoneModal = function() {
             const modal = document.getElementById('phone-modal');
             const list = document.getElementById('phone-list');
-            const config = JSON.parse(localStorage.getItem('kt_config')) || DEFAULT_CONFIG;
+            
+            // 안전하게 설정 불러오기
+            let config = JSON.parse(localStorage.getItem('kt_config'));
+            if (!config || !config.branches) config = DEFAULT_CONFIG;
 
             if (modal.classList.contains('hidden')) {
                 // 팝업 열릴 때 목록 생성
@@ -445,7 +452,10 @@
             btn.innerText = "전송 중...";
             btn.disabled = true;
             
-            const config = JSON.parse(localStorage.getItem('kt_config')) || DEFAULT_CONFIG;
+            // 설정 안전하게 불러오기
+            let config = JSON.parse(localStorage.getItem('kt_config'));
+            if (!config || !config.branches) config = DEFAULT_CONFIG;
+            
             const selectedBranch = document.getElementById('branch').value;
             const targetEmail = (config.branches[selectedBranch] && config.branches[selectedBranch].email) || "pbh350111@gmail.com"; 
             
