@@ -62,7 +62,6 @@
         <div class="p-6">
             <h2 class="mb-2 text-xl font-bold flex items-center text-white"><i data-lucide="crown" class="mr-2 text-yellow-500 w-5"></i> 프리미엄 특가 모델</h2>
             
-            <!-- 이용 조건 -->
             <div class="mb-5 text-xs text-zinc-400 ml-7 border-l-2 border-yellow-600/50 pl-3">
                 <p class="text-yellow-500 font-bold mb-1 text-sm">신한카드 프로모션</p>
                 <p>• 월 30만원 이용조건 (2년)</p>
@@ -70,7 +69,6 @@
                 <p class="text-zinc-300">• 통신비, 관리비, 학원비, 병원비 실적 인정 가능</p>
             </div>
             
-            <!-- 상품 리스트 -->
             <div class="space-y-4">
                 <!-- 상품 1 -->
                 <div class="group relative overflow-hidden rounded-xl bg-zinc-800 border border-zinc-700 shadow-lg flex">
@@ -83,7 +81,6 @@
                         <div class="text-sm text-zinc-400">실구매가 <span id="price-prod1" class="text-xl font-bold text-yellow-400 ml-1"></span></div>
                     </div>
                 </div>
-
                 <!-- 상품 2 -->
                 <div class="group relative overflow-hidden rounded-xl bg-zinc-800 border border-zinc-700 shadow-lg flex">
                     <div class="w-1/3 relative">
@@ -97,7 +94,6 @@
                 </div>
             </div>
             
-            <!-- 현금 사은품 섹션 -->
             <div class="mt-6 p-4 rounded-xl bg-gradient-to-r from-zinc-800 to-black border border-yellow-600/30 text-center shadow-lg">
                 <p class="text-yellow-400 font-bold text-sm mb-1">휴대폰과 함께 인터넷+ TV 신규가입시</p>
                 <p class="text-white text-2xl font-black drop-shadow-md">현금사은품 최대 <span class="text-yellow-400">80만원</span> 증정</p>
@@ -106,14 +102,12 @@
             <!-- 블랙프라이데이 가전 사은품 섹션 -->
             <div class="mt-6 bg-zinc-800/50 border border-zinc-700 rounded-xl p-5 relative overflow-hidden">
                 <div class="absolute -right-10 -top-10 w-40 h-40 bg-yellow-500/5 rounded-full blur-3xl"></div>
-                
                 <div class="flex items-center justify-between mb-4 relative z-10">
                     <h3 class="text-lg font-bold text-white flex items-center">
                         <i data-lucide="gift" class="mr-2 text-yellow-500 w-5"></i> 블랙프라이데이 가전
                     </h3>
                     <span class="text-[10px] text-zinc-300 border border-zinc-600 px-2 py-1 rounded-full bg-zinc-800">가전구독초이스 개통시 택1</span>
                 </div>
-
                 <div class="grid grid-cols-1 gap-2 relative z-10">
                     <div class="flex items-center justify-between p-3 rounded-lg bg-zinc-800 border border-zinc-700 hover:border-yellow-500/30 transition group">
                         <span class="text-sm font-bold text-zinc-200">삼성 스마트모니터 <span class="text-xs font-normal text-zinc-500 group-hover:text-yellow-500/70">(삼텐바이미)</span></span>
@@ -174,10 +168,9 @@
                         </div>
                     </div>
 
-                    <!-- [추가된 항목] 선택 사항 -->
+                    <!-- 선택 사항 -->
                     <div class="space-y-3 pt-3 border-t border-zinc-700">
                         <div class="text-xs text-zinc-400 font-bold mb-1">추가 정보 (선택사항)</div>
-                        
                         <select id="current_fee" name="current_fee" class="w-full p-2.5 rounded bg-black/50 border border-zinc-600 text-xs text-white focus:outline-none focus:border-yellow-500">
                             <option value="" selected>현재 월 요금 (선택)</option>
                             <option value="3만원 미만">3만원 미만</option>
@@ -188,7 +181,6 @@
                             <option value="15~20만원">15~20만원</option>
                             <option value="20만원 이상">20만원 이상</option>
                         </select>
-
                         <select id="desired_model" name="desired_model" class="w-full p-2.5 rounded bg-black/50 border border-zinc-600 text-xs text-white focus:outline-none focus:border-yellow-500">
                             <option value="" selected>희망 기종 (선택)</option>
                             <option value="아이폰 17 시리즈">아이폰 17 시리즈</option>
@@ -198,7 +190,6 @@
                             <option value="효도폰/키즈폰">효도폰 / 키즈폰</option>
                             <option value="기타/상담후결정">기타 / 상담 후 결정</option>
                         </select>
-
                         <select id="promo_item" name="promo_item" class="w-full p-2.5 rounded bg-black/50 border border-zinc-600 text-xs text-white focus:outline-none focus:border-yellow-500">
                             <option value="" selected>가전구독 프로모션 상품 (선택)</option>
                             <option value="선택 안함">선택 안함</option>
@@ -221,7 +212,6 @@
 
         <!-- 하단 바 -->
         <div class="fixed bottom-0 left-0 right-0 z-50 flex h-16 border-t border-zinc-800 bg-zinc-900 shadow-lg md:hidden">
-            <!-- [수정됨] 전화 상담 버튼 -> 팝업 열기 -->
             <button onclick="togglePhoneModal()" class="flex-1 flex flex-col items-center justify-center text-zinc-400 bg-zinc-900 active:bg-zinc-800">
                 <i data-lucide="phone" class="w-5 mb-0.5"></i>
                 <span class="text-[10px] font-bold">전화 상담</span>
@@ -237,15 +227,15 @@
         </button>
     </div>
 
-    <!-- [추가됨] 전화 상담 팝업 -->
+    <!-- 전화 상담 모달 (지점 선택) -->
     <div id="phone-modal" class="hidden fixed inset-0 z-[70] flex items-end justify-center bg-black/80 backdrop-blur-sm sm:items-center p-4">
         <div class="bg-zinc-800 w-full max-w-sm rounded-t-2xl sm:rounded-2xl p-5 shadow-2xl animate-in slide-in-from-bottom-5">
             <div class="flex justify-between items-center mb-4 border-b border-zinc-700 pb-3">
-                <h3 class="text-lg font-bold text-white">📞 상담하실 매장을 선택하세요</h3>
+                <h3 class="text-lg font-bold text-white">📞 상담하실 매장 선택</h3>
                 <button onclick="togglePhoneModal()" class="text-zinc-400 hover:text-white"><i data-lucide="x" class="w-6 h-6"></i></button>
             </div>
             <div id="phone-list" class="space-y-2 max-h-[60vh] overflow-y-auto">
-                <!-- 자바스크립트가 여기에 목록을 만듭니다 -->
+                <!-- 자바스크립트로 목록 생성됨 -->
             </div>
         </div>
     </div>
@@ -304,7 +294,15 @@
                     <div><label class="block text-xs font-bold text-slate-500 mb-1">배경 이미지 URL</label><input type="text" id="conf-heroImage" class="w-full border p-2 rounded"></div>
                 </div>
 
-                <div class="space-y-6">
+                <!-- [추가됨] 매장 연락처 관리 섹션 -->
+                <div class="space-y-4 border-t pt-4">
+                    <h2 class="text-lg font-bold border-b pb-2 flex items-center text-slate-700"><i data-lucide="phone" class="mr-2 w-5"></i> 매장 연락처 관리</h2>
+                    <div class="grid md:grid-cols-2 gap-4" id="branch-inputs">
+                        <!-- 자바스크립트로 자동 생성됨 -->
+                    </div>
+                </div>
+
+                <div class="space-y-6 border-t pt-4">
                     <h2 class="text-lg font-bold border-b pb-2 flex items-center text-slate-700">상품 관리</h2>
                     <div class="border rounded-lg p-4 bg-slate-50">
                         <div class="font-bold text-sm mb-3">상품 1 (위쪽)</div>
@@ -312,7 +310,7 @@
                             <input type="text" id="conf-prod1-name" placeholder="상품명" class="border p-2 rounded text-sm">
                             <input type="text" id="conf-prod1-badge" placeholder="배지" class="border p-2 rounded text-sm">
                         </div>
-                        <input type="text" id="conf-prod1-price" placeholder="가격 (예: 0원)" class="w-full border p-2 rounded text-sm mb-2">
+                        <input type="text" id="conf-prod1-price" placeholder="가격" class="w-full border p-2 rounded text-sm mb-2">
                         <input type="text" id="conf-prod1-img" placeholder="이미지 URL" class="w-full border p-2 rounded text-xs">
                     </div>
                     <div class="border rounded-lg p-4 bg-slate-50">
@@ -321,7 +319,7 @@
                             <input type="text" id="conf-prod2-name" placeholder="상품명" class="border p-2 rounded text-sm">
                             <input type="text" id="conf-prod2-badge" placeholder="배지" class="border p-2 rounded text-sm">
                         </div>
-                        <input type="text" id="conf-prod2-price" placeholder="가격 (예: 10만원)" class="w-full border p-2 rounded text-sm mb-2">
+                        <input type="text" id="conf-prod2-price" placeholder="가격" class="w-full border p-2 rounded text-sm mb-2">
                         <input type="text" id="conf-prod2-img" placeholder="이미지 URL" class="w-full border p-2 rounded text-xs">
                     </div>
                 </div>
@@ -331,49 +329,34 @@
         </div>
     </div>
 
-    <!-- 스크립트 -->
     <script type="module">
         lucide.createIcons();
 
-        // ⚠️ [필수 수정] 지점별 정보 (전화번호와 이메일을 여기에 입력하세요)
-        const BRANCH_DATA = {
-            "세종 소담점": { phone: "010-0000-0000", email: "sodam@test.com" },
-            "세종 종촌점": { phone: "010-0000-0000", email: "jongchon@test.com" },
-            "대전 목동점": { phone: "010-0000-0000", email: "mokdong@test.com" },
-            "대전 복수점": { phone: "010-0000-0000", email: "boksu@test.com" },
-            "대전 용전점": { phone: "010-0000-0000", email: "yongjeon@test.com" },
-            "대전 반석점": { phone: "010-0000-0000", email: "banseok@test.com" }
+        // ⚠️ [중요] 지점별 이메일 (이건 코드에서만 수정 가능)
+        const BRANCH_EMAILS = {
+            "세종 소담점": "sodam_manager@gmail.com",
+            "세종 종촌점": "jongchon_manager@gmail.com",
+            "대전 목동점": "mokdong_manager@gmail.com",
+            "대전 복수점": "boksu_manager@gmail.com",
+            "대전 용전점": "yongjeon_manager@gmail.com",
+            "대전 반석점": "banseok_manager@gmail.com"
         };
 
-        // 전화 상담 팝업 렌더링
-        function renderPhoneMenu() {
-            const list = document.getElementById('phone-list');
-            list.innerHTML = Object.keys(BRANCH_DATA).map(branch => `
-                <a href="tel:${BRANCH_DATA[branch].phone}" class="flex items-center justify-between p-4 bg-zinc-700 rounded-lg hover:bg-zinc-600 transition group border border-zinc-600">
-                    <span class="font-bold text-white">${branch}</span>
-                    <div class="flex items-center text-yellow-400 text-sm">
-                        <i data-lucide="phone-call" class="w-4 h-4 mr-2"></i> 전화걸기
-                    </div>
-                </a>
-            `).join('');
-            lucide.createIcons(); // 아이콘 리로드
-        }
-        
-        // 팝업 열고 닫기 함수
-        window.togglePhoneModal = function() {
-            const modal = document.getElementById('phone-modal');
-            if (modal.classList.contains('hidden')) {
-                renderPhoneMenu(); // 열 때마다 목록 생성
-                modal.classList.remove('hidden');
-            } else {
-                modal.classList.add('hidden');
-            }
-        }
-
+        // 기본 설정값 (전화번호 포함)
         const DEFAULT_CONFIG = {
             title: "KT 가우리엔터프라이즈",
             subtitle: "우리 동네 1등 혜택! 인터넷+TV+휴대폰 최대 지원",
             heroImage: "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&q=80&w=2000",
+            
+            // 매장별 전화번호 초기값
+            branches: {
+                "세종 소담점": "010-0000-0000",
+                "세종 종촌점": "010-0000-0000",
+                "대전 목동점": "010-0000-0000",
+                "대전 복수점": "010-0000-0000",
+                "대전 용전점": "010-0000-0000",
+                "대전 반석점": "010-0000-0000"
+            },
             
             prod1Name: "Galaxy S25", prod1Badge: "최신기종", prod1Price: "0원",
             prod1Img: "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?auto=format&fit=crop&q=80&w=600",
@@ -384,21 +367,48 @@
 
         function loadConfig() {
             const config = JSON.parse(localStorage.getItem('kt_config')) || DEFAULT_CONFIG;
-            safeSetHTML('main-title', config.title); safeSetText('main-subtitle', config.subtitle); safeSetSrc('hero-image', config.heroImage);
+            
+            // 화면 업데이트
+            safeSetHTML('main-title', config.title); 
+            safeSetText('main-subtitle', config.subtitle); 
+            safeSetSrc('hero-image', config.heroImage);
             
             safeSetText('title-prod1', config.prod1Name); safeSetText('badge-prod1', config.prod1Badge); safeSetText('price-prod1', config.prod1Price); safeSetSrc('img-prod1', config.prod1Img);
             safeSetText('title-prod2', config.prod2Name); safeSetText('badge-prod2', config.prod2Badge); safeSetText('price-prod2', config.prod2Price); safeSetSrc('img-prod2', config.prod2Img);
 
-            safeSetValue('conf-title', config.title); safeSetValue('conf-subtitle', config.subtitle); safeSetValue('conf-heroImage', config.heroImage);
+            // 관리자 폼 채우기
+            safeSetValue('conf-title', config.title); 
+            safeSetValue('conf-subtitle', config.subtitle); 
+            safeSetValue('conf-heroImage', config.heroImage);
+            
             safeSetValue('conf-prod1-name', config.prod1Name); safeSetValue('conf-prod1-badge', config.prod1Badge); safeSetValue('conf-prod1-price', config.prod1Price); safeSetValue('conf-prod1-img', config.prod1Img);
             safeSetValue('conf-prod2-name', config.prod2Name); safeSetValue('conf-prod2-badge', config.prod2Badge); safeSetValue('conf-prod2-price', config.prod2Price); safeSetValue('conf-prod2-img', config.prod2Img);
+
+            // 매장 연락처 입력폼 생성 및 채우기
+            const branchInputs = document.getElementById('branch-inputs');
+            if (branchInputs) {
+                branchInputs.innerHTML = Object.keys(config.branches).map(b => `
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 mb-1">${b}</label>
+                        <input type="text" class="branch-input w-full border p-2 rounded text-sm" data-branch="${b}" value="${config.branches[b]}">
+                    </div>
+                `).join('');
+            }
         }
 
         window.saveConfig = function() {
+            // 매장 연락처 수집
+            const branchInputs = document.querySelectorAll('.branch-input');
+            const branches = {};
+            branchInputs.forEach(input => {
+                branches[input.dataset.branch] = input.value;
+            });
+
             const newConfig = {
                 title: document.getElementById('conf-title').value,
                 subtitle: document.getElementById('conf-subtitle').value,
                 heroImage: document.getElementById('conf-heroImage').value,
+                branches: branches, // 저장된 연락처
                 
                 prod1Name: document.getElementById('conf-prod1-name').value,
                 prod1Badge: document.getElementById('conf-prod1-badge').value,
@@ -415,6 +425,34 @@
             loadConfig();
         }
 
+        // 전화 팝업 렌더링 (저장된 설정 사용)
+        window.renderPhoneMenu = function() {
+            const config = JSON.parse(localStorage.getItem('kt_config')) || DEFAULT_CONFIG;
+            const list = document.getElementById('phone-list');
+            
+            list.innerHTML = Object.keys(config.branches).map(branch => `
+                <a href="tel:${config.branches[branch]}" class="flex items-center justify-between p-4 bg-zinc-700 rounded-lg hover:bg-zinc-600 transition group border border-zinc-600">
+                    <span class="font-bold text-white">${branch}</span>
+                    <div class="flex items-center text-yellow-400 text-sm">
+                        <span class="mr-2 text-zinc-400 text-xs">${config.branches[branch]}</span>
+                        <i data-lucide="phone-call" class="w-4 h-4"></i>
+                    </div>
+                </a>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        window.togglePhoneModal = function() {
+            const modal = document.getElementById('phone-modal');
+            if (modal.classList.contains('hidden')) {
+                renderPhoneMenu();
+                modal.classList.remove('hidden');
+            } else {
+                modal.classList.add('hidden');
+            }
+        }
+
+        // 헬퍼 함수
         function safeSetHTML(id, val) { const el = document.getElementById(id); if(el) el.innerHTML = val; }
         function safeSetText(id, val) { const el = document.getElementById(id); if(el) el.innerText = val; }
         function safeSetSrc(id, val) { const el = document.getElementById(id); if(el) el.src = val; }
@@ -422,6 +460,7 @@
 
         loadConfig();
 
+        // 이메일 전송
         window.submitForm = function(e) {
             e.preventDefault();
             const btn = document.getElementById('submit-btn');
@@ -429,8 +468,7 @@
             btn.disabled = true;
             
             const selectedBranch = document.getElementById('branch').value;
-            // 지점별 이메일 로드 (없으면 기본값)
-            const targetEmail = (BRANCH_DATA[selectedBranch] && BRANCH_DATA[selectedBranch].email) || "pbh350111@gmail.com"; 
+            const targetEmail = BRANCH_EMAILS[selectedBranch] || "pbh350111@gmail.com"; 
             
             const currentFee = document.getElementById('current_fee').value || "미선택";
             const desiredModel = document.getElementById('desired_model').value || "미선택";
