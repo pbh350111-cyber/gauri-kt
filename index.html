@@ -5,17 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KT 가우리엔터프라이즈</title>
     
+    <!-- 1. 필수 도구 로드 -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     
-    <script type="text/javascript">
-        (function(){
-            // ✅ 사장님 공개키
-            emailjs.init("oM5C3k8SXXow-GN5v");
-        })();
-    </script>
-
+    <!-- 2. 디자인 스타일 -->
     <style>
         @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
         body { font-family: 'Pretendard', sans-serif; }
@@ -38,7 +33,7 @@
 </head>
 <body class="bg-black text-white pb-24 md:pb-0">
 
-    <!-- [1] 고객용 화면 (반응형 적용: max-w-md -> max-w-7xl) -->
+    <!-- ================= [1] 고객용 화면 (반응형 적용: max-w-md -> max-w-7xl) -->
     <div id="user-page" class="mx-auto max-w-7xl bg-zinc-900 shadow-2xl min-h-screen relative border-x border-zinc-800">
         
         <!-- 상단 배너 -->
@@ -272,6 +267,7 @@
                 </div>
             </div>
 
+            <!-- 사이트 설정 탭 -->
             <div id="tab-settings" class="hidden bg-white rounded-lg shadow p-6 space-y-8 animate-in fade-in">
                 <div class="bg-blue-50 p-4 rounded-lg border border-blue-100 mb-6">
                     <h3 class="font-bold text-blue-800 text-sm mb-2 flex items-center">✅ 사진 무료 호스팅 (ImgBB)</h3>
@@ -541,4 +537,3 @@
     </script>
 </body>
 </html>
-
