@@ -685,8 +685,8 @@
                 
                 // 데이터 매핑
                 mobile_carrier = document.getElementById('order-cur-mobile').value || '미선택';
-                desired_model = `${model} (${storage})`;
-                promo_item += `[무선] 할부:${installment}, 요금제:${plan}, 할인:${discount}, 부가서비스:${addService}, 보험:${insurance}, 복지:${welfare}, 카드:${cardPromo}\n`;
+                desired_model = `${model} (${storage}) / ${installment}`;
+                promo_item += `[무선] 요금제:${plan}, 할인:${discount}, 부가서비스:${addService}, 보험:${insurance}, 복지:${welfare}, 카드:${cardPromo}\n`;
             }
             
             if(document.getElementById('check-internet').checked) {
