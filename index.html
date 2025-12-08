@@ -61,7 +61,7 @@
             @apply bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed opacity-70 hover:border-gray-200 hover:bg-gray-100 hover:text-gray-400 transform-none shadow-none;
         }
 
-        /* 가격표 테이블 스타일 (특가 전용) */
+        /* 가격표 테이블 스타일 */
         .price-row { @apply flex justify-between items-center py-2 text-sm text-slate-600; }
         .price-row.total { @apply border-t-2 border-slate-900 pt-4 mt-2 text-lg md:text-xl font-black text-slate-900; }
         .discount-text { @apply text-red-600 font-bold; }
@@ -78,15 +78,90 @@
 </head>
 <body class="bg-slate-50 pb-24">
 
+    <!-- ========================================== -->
+    <!-- [관리자 설정 영역] 여기서 내용을 수정하세요 -->
+    <!-- ========================================== -->
+    <script>
+        const SITE_CONFIG = {
+            // 1. 기본 정보
+            info: {
+                logoImg: "https://i.ibb.co/cXVFKzLj/ktlogo.png",
+                logoText: "MALL",
+                phone: "010-2141-0137",
+                kakaoUrl: "http://pf.kakao.com/_XRxaan/chat",
+                emailJsKey: "oM5C3k8SXXow-GN5v"
+            },
+
+            // 2. 이달의 특가 상품 목록
+            specialProducts: [
+                { id: 'zflip7', brand: 'SAMSUNG', name: '갤럭시 Z 플립 7', img: 'https://i.ibb.co/yFPsLH8C/f766.jpg', badge: '특가', mandatoryPlan: '초이스 베이직(9만)', price: 1485000, publicSupport: 500000, addSupport: 350000 },
+                { id: 'zfold7', brand: 'SAMSUNG', name: '갤럭시 Z 폴드 7', img: 'https://i.ibb.co/gbLrGSQv/f966.jpg', badge: '프리미엄', mandatoryPlan: '초이스 베이직(9만)', price: 2379300, publicSupport: 500000, addSupport: 350000 },
+                { id: 's25', brand: 'SAMSUNG', name: '갤럭시 S25', img: 'https://i.ibb.co/BhsV2vM/s931.jpg', badge: '최신상', mandatoryPlan: '초이스 베이직(9만)', price: 1155000, publicSupport: 500000, addSupport: 350000 },
+                { id: 'ip17', brand: 'APPLE', name: '아이폰 17', img: 'https://i.ibb.co/60GKwz8T/aip17.jpg', badge: '사전예약', mandatoryPlan: '초이스 베이직(9만)', price: 1287000, publicSupport: 450000, addSupport: 200000 },
+                { id: 'ip17p', brand: 'APPLE', name: '아이폰 17 Pro', img: 'https://i.ibb.co/BK6XfdZd/aip17p.jpg', badge: '티타늄', mandatoryPlan: '초이스 베이직(9만)', price: 1782000, publicSupport: 450000, addSupport: 200000 },
+                { id: 'ip17pm', brand: 'APPLE', name: '아이폰 17 Pro Max', img: 'https://i.ibb.co/TM5mcm2H/aip17pm.jpg', badge: '최고성능', mandatoryPlan: '초이스 베이직(9만)', price: 1980000, publicSupport: 450000, addSupport: 200000 },
+                { id: 'ip_air', brand: 'APPLE', name: '아이폰 에어', img: 'https://i.ibb.co/GSfGqG7/aipa.jpg', badge: 'SLIM', mandatoryPlan: '초이스 베이직(9만)', price: 1584000, publicSupport: 450000, addSupport: 200000 },
+                { id: 'jump4', brand: 'SAMSUNG', name: '갤럭시 점프 4', img: 'https://i.ibb.co/pBpr4WCm/m366.jpg', badge: '공짜폰', mandatoryPlan: '심플 30GB(6.1만)', price: 449900, publicSupport: 363000, addSupport: 86900 },
+                { id: 'a17', brand: 'SAMSUNG', name: '갤럭시 A17', img: 'https://i.ibb.co/1fzPxCdS/a175.jpg', badge: '효도폰', mandatoryPlan: '37,000원 요금제', price: 319000, publicSupport: 211000, addSupport: 108000 }
+            ],
+
+            // 3. 인터넷+TV 요금 및 정보 설정
+            internet: {
+                // (1) 상품 카드 정보 (이름, 설명, 뱃지)
+                cards: {
+                    plan1: { name: "지니 TV 베이직", desc: "230여개 채널", badge: "" },
+                    plan2: { name: "지니 TV 모든G", desc: "250여개 채널+VOD", badge: "강력추천" },
+                    plan3: { name: "지니 TV 디즈니+", desc: "디즈니+ OTT 결합", badge: "" }
+                },
+                // (2) 요금 데이터 [월 요금(약정), 결합 할인가]
+                // 구조: { '속도': { '셋탑박스': { plan1: [원래,결합], plan2: [원래,결합], plan3: [원래,결합] } } }
+                prices: {
+                    '100M': { // 슬림
+                        'genieA': { plan1: ['37,400원','31,900원'], plan2: ['42,900원','37,400원'], plan3: ['45,200원','39,700원'] },
+                        'genie3A': { plan1: ['38,500원','33,000원'], plan2: ['44,000원','38,500원'], plan3: ['46,300원','40,800원'] },
+                        'genie4': { plan1: ['40,700원','35,200원'], plan2: ['46,200원','40,700원'], plan3: ['48,500원','43,000원'] },
+                        'sound': { plan1: ['42,900원','37,400원'], plan2: ['46,200원','40,700원'], plan3: ['48,500원','43,000원'] }
+                    },
+                    '500M': { // 베이직
+                        'genieA': { plan1: ['42,900원','37,400원'], plan2: ['48,400원','42,900원'], plan3: ['50,700원','45,200원'] },
+                        'genie3A': { plan1: ['44,000원','38,500원'], plan2: ['49,500원','44,000원'], plan3: ['51,800원','46,300원'] },
+                        'genie4': { plan1: ['46,200원','40,700원'], plan2: ['51,700원','46,200원'], plan3: ['54,000원','48,500원'] },
+                        'sound': { plan1: ['48,400원','42,900원'], plan2: ['51,700원','46,200원'], plan3: ['54,000원','48,500원'] }
+                    },
+                    '1G': { // 에센스
+                        'genieA': { plan1: ['48,400원','42,900원'], plan2: ['53,900원','48,400원'], plan3: ['56,200원','50,700원'] },
+                        'genie3A': { plan1: ['49,500원','44,000원'], plan2: ['55,000원','49,500원'], plan3: ['57,300원','51,800원'] },
+                        'genie4': { plan1: ['51,700원','46,200원'], plan2: ['57,200원','51,700원'], plan3: ['59,500원','54,000원'] },
+                        'sound': { plan1: ['53,900원','48,400원'], plan2: ['57,200원','51,700원'], plan3: ['59,500원','54,000원'] }
+                    }
+                }
+            },
+
+            // 4. 하단 사업자 정보
+            footer: {
+                companyName: "(주)kt 가우리엔터프라이즈",
+                owner: "홍길동",
+                license: "000-00-00000",
+                address: "서울시 강남구 테헤란로 123",
+                report: "2024-서울강남-0000",
+                manager: "홍길동"
+            }
+        };
+
+        // 초기화 실행
+        (function(){ emailjs.init(SITE_CONFIG.info.emailJsKey); })();
+    </script>
+    <!-- ========================================== -->
+
     <!-- 1. 헤더 -->
     <header class="bg-white sticky top-0 z-50 shadow-sm">
         <div class="flex justify-between items-center px-4 py-3">
-            <div class="text-2xl font-black tracking-tighter cursor-pointer" onclick="window.scrollTo(0,0)">
-                <span class="text-black">KT</span><span class="kt-text-red">MALL</span>
+            <div class="flex items-center cursor-pointer" onclick="window.scrollTo(0,0)">
+                <img src="" id="header-logo-img" alt="KT Logo" class="h-10 mr-2 object-contain">
+                <span class="text-3xl font-black kt-text-red tracking-tighter" id="header-logo-text">MALL</span>
             </div>
             <div class="flex gap-4 text-gray-600">
-                <!-- 전화번호 업데이트 -->
-                <a href="tel:010-2141-0137"><i class="fas fa-phone-alt text-xl"></i></a>
+                <a href="#" id="header-phone-link"><i class="fas fa-phone-alt text-xl"></i></a>
                 <i class="fas fa-bars text-xl cursor-pointer"></i>
             </div>
         </div>
@@ -116,14 +191,13 @@
                 <h2 class="text-3xl md:text-4xl font-black text-slate-900 mb-2">🔥 이달의 특가 폰</h2>
                 <p class="text-slate-500 text-sm">공시지원금 + 추가지원금 MAX 적용 모델</p>
             </div>
-
             <div id="special-product-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- 자바스크립트로 특가 상품 로드 -->
+                <!-- JS 로드 -->
             </div>
         </div>
     </section>
 
-    <!-- 4. 인터넷 요금표 섹션 -->
+    <!-- 4. 인터넷 요금표 섹션 (업데이트: 자동 렌더링) -->
     <section id="section-internet" class="bg-white py-12 px-2 md:px-4 border-t-8 border-slate-100">
         <div id="kt-rate-calculator" class="w-full max-w-6xl mx-auto p-4 section-container">
             <div class="flex flex-col items-center mb-10">
@@ -161,62 +235,9 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <!-- 베이직 -->
-                    <div class="rate-card group">
-                        <div class="mb-4">
-                            <h3 class="text-lg md:text-xl font-bold text-slate-900">지니 TV 베이직</h3>
-                            <p class="text-xs md:text-sm text-slate-500 mt-1">채널 230여 개</p>
-                            <p class="text-[10px] md:text-xs text-slate-400 mt-0.5 ui-stb-name">기가지니A 셋탑</p>
-                        </div>
-                        <div class="space-y-2 mb-6">
-                            <div class="flex justify-between text-xs md:text-sm text-slate-500">
-                                <span>3년 약정</span><span class="line-through decoration-slate-400" id="price-basic-org">0원</span>
-                            </div>
-                            <div class="flex justify-between items-end border-t border-slate-100 pt-2">
-                                <span class="font-bold text-slate-700 text-sm">결합 시</span>
-                                <span class="text-xl md:text-2xl font-black text-red-600" id="price-basic-sale">0원</span>
-                            </div>
-                        </div>
-                        <button onclick="requestConsult('지니 TV 베이직')" class="w-full border border-slate-300 text-slate-700 py-3 rounded-xl font-bold text-sm hover:bg-slate-50 transition">간편 상담 신청</button>
-                    </div>
-                    <!-- 모든G -->
-                    <div class="rate-card border-2 border-red-500 bg-red-50/10">
-                        <div class="absolute top-0 right-0 bg-red-600 text-white text-[10px] px-2 py-1 rounded-bl-xl font-bold">강력추천</div>
-                        <div class="mb-4">
-                            <h3 class="text-lg md:text-xl font-bold text-slate-900">지니 TV 모든G</h3>
-                            <p class="text-xs md:text-sm text-slate-500 mt-1">채널 250여 개 + VOD무료</p>
-                            <p class="text-[10px] md:text-xs text-slate-400 mt-0.5 ui-stb-name">기가지니A 셋탑</p>
-                        </div>
-                        <div class="space-y-2 mb-6">
-                            <div class="flex justify-between text-xs md:text-sm text-slate-500">
-                                <span>3년 약정</span><span class="line-through decoration-slate-400" id="price-all-org">0원</span>
-                            </div>
-                            <div class="flex justify-between items-end border-t border-red-100 pt-2">
-                                <span class="font-bold text-slate-700 text-sm">결합 시</span>
-                                <span class="text-xl md:text-2xl font-black text-red-600" id="price-all-sale">0원</span>
-                            </div>
-                        </div>
-                        <button onclick="requestConsult('지니 TV 모든G')" class="w-full bg-red-600 text-white py-3 rounded-xl font-bold text-sm hover:bg-red-700 transition shadow">간편 상담 신청</button>
-                    </div>
-                    <!-- 디즈니+ -->
-                    <div class="rate-card">
-                        <div class="mb-4">
-                            <h3 class="text-lg md:text-xl font-bold text-slate-900">지니 TV 디즈니+</h3>
-                            <p class="text-xs md:text-sm text-slate-500 mt-1">채널 250여 개 + 디즈니+</p>
-                            <p class="text-[10px] md:text-xs text-slate-400 mt-0.5 ui-stb-name">기가지니A 셋탑</p>
-                        </div>
-                        <div class="space-y-2 mb-6">
-                            <div class="flex justify-between text-xs md:text-sm text-slate-500">
-                                <span>3년 약정</span><span class="line-through decoration-slate-400" id="price-ott-org">0원</span>
-                            </div>
-                            <div class="flex justify-between items-end border-t border-slate-100 pt-2">
-                                <span class="font-bold text-slate-700 text-sm">결합 시</span>
-                                <span class="text-xl md:text-2xl font-black text-red-600" id="price-ott-sale">0원</span>
-                            </div>
-                        </div>
-                        <button onclick="requestConsult('지니 TV 디즈니+')" class="w-full border border-slate-300 text-slate-700 py-3 rounded-xl font-bold text-sm hover:bg-slate-50 transition">간편 상담 신청</button>
-                    </div>
+                <!-- 인터넷 상품 카드 그리드 (JS로 자동 생성됨) -->
+                <div id="internet-plan-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Cards will be injected here -->
                 </div>
             </div>
         </div>
@@ -239,7 +260,6 @@
                         <input type="tel" id="fast-phone" required placeholder="1234-5678" class="w-2/3 bg-gray-100 border border-gray-300 rounded-xl p-3">
                     </div>
                 </div>
-
                 <!-- 상품 선택 -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">관심 상품 선택 (중복 가능)</label>
@@ -253,7 +273,6 @@
                             <div class="absolute inset-0 border-2 border-red-500 rounded-xl hidden" id="border-mobile"></div>
                         </label>
                     </div>
-
                     <!-- 인터넷 상세 옵션 -->
                     <div id="consult-opt-internet" class="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
                         <p class="text-xs font-bold text-slate-600 mb-1"><i class="fas fa-wifi text-red-500 mr-1"></i> 인터넷 속도 & TV 선택</p>
@@ -265,19 +284,17 @@
                         </select>
                         <select id="fast-tv-plan" class="custom-select bg-white">
                             <option value="">TV 요금제 선택</option>
-                            <option value="베이직">지니 TV 베이직 (230채널)</option>
-                            <option value="모든G">지니 TV 모든G (250채널+VOD)</option>
-                            <option value="디즈니+">지니 TV 디즈니+ (OTT결합)</option>
+                            <option value="베이직">지니 TV 베이직</option>
+                            <option value="모든G">지니 TV 모든G</option>
+                            <option value="디즈니+">지니 TV 디즈니+</option>
                         </select>
                     </div>
-
                     <!-- 휴대폰 상세 옵션 -->
                     <div id="consult-opt-mobile" class="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-200 hidden">
                         <p class="text-xs font-bold text-slate-600 mb-1"><i class="fas fa-mobile-alt text-red-500 mr-1"></i> 희망 기종 입력 (선택)</p>
                         <input type="text" id="fast-mobile-model" placeholder="예: 갤럭시 S25, 아이폰 16" class="custom-input bg-white">
                     </div>
                 </div>
-
                 <button type="submit" class="w-full kt-red text-white font-bold text-lg py-4 rounded-xl shadow-lg mt-2 hover:bg-red-700 transition">무료 상담 접수하기</button>
             </form>
         </div>
@@ -286,18 +303,17 @@
     <!-- 6. 푸터 -->
     <footer class="bg-gray-900 text-gray-500 py-10 px-6 text-xs leading-relaxed mt-12 pb-24">
         <div class="max-w-6xl mx-auto">
-            <!-- (주)kt 가우리엔터프라이즈 로 수정됨 -->
-            <p class="font-bold text-white mb-2 text-lg">(주)kt 가우리엔터프라이즈</p>
-            <p>대표자: 홍길동 | 사업자등록번호: 000-00-00000</p>
-            <p>주소: 서울시 강남구 테헤란로 123</p>
-            <p class="pt-4 border-t border-gray-800">COPYRIGHT © KT MALL. ALL RIGHTS RESERVED.</p>
+            <p class="font-bold text-white mb-2 text-lg" id="footer-company">(주)kt 가우리엔터프라이즈</p>
+            <p>대표자: <span id="footer-owner">홍길동</span> | 사업자등록번호: <span id="footer-license">000-00-00000</span></p>
+            <p>주소: <span id="footer-address">서울시 강남구...</span></p>
+            <p>통신판매업신고: <span id="footer-report">2024-...</span></p>
+            <p class="pt-4 border-t border-gray-800">COPYRIGHT © KT GAURI. ALL RIGHTS RESERVED.</p>
         </div>
     </footer>
 
     <!-- 7. 하단 고정 바 -->
     <div class="fixed bottom-0 left-0 w-full flex text-center z-50 h-14 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
-        <!-- 카카오톡 링크 업데이트 -->
-        <a href="http://pf.kakao.com/_XRxaan/chat" target="_blank" class="w-1/2 bg-[#FAE100] text-[#3B1E1E] flex items-center justify-center gap-2 font-bold text-lg">
+        <a href="#" target="_blank" class="w-1/2 bg-[#FAE100] text-[#3B1E1E] flex items-center justify-center gap-2 font-bold text-lg" id="kakao-btn">
             <i class="fas fa-comment"></i> 카카오톡 상담
         </a>
         <button onclick="toggleConsultMenu()" class="w-1/2 bg-[#222] text-white flex items-center justify-center gap-2 font-bold text-lg">
@@ -311,8 +327,7 @@
         <div class="bg-white w-full md:w-80 md:rounded-3xl rounded-t-3xl p-6 relative z-10 transform transition-transform duration-300 translate-y-0 shadow-2xl">
             <h3 class="text-lg font-bold text-slate-900 mb-6 text-center">상담 방식을 선택해주세요</h3>
             <div class="flex flex-col gap-3">
-                <!-- 전화번호 업데이트 -->
-                <a href="tel:010-2141-0137" class="flex items-center justify-center gap-3 w-full bg-slate-100 hover:bg-slate-200 text-slate-800 py-4 rounded-xl font-bold text-lg transition border border-slate-200">
+                <a href="#" class="flex items-center justify-center gap-3 w-full bg-slate-100 hover:bg-slate-200 text-slate-800 py-4 rounded-xl font-bold text-lg transition border border-slate-200" id="consult-phone-link">
                     <i class="fas fa-phone-alt text-red-600"></i> 전화 상담
                 </a>
                 <button onclick="scrollToSection('section-consult-form'); toggleConsultMenu();" class="flex items-center justify-center gap-3 w-full bg-red-600 hover:bg-red-700 text-white py-4 rounded-xl font-bold text-lg transition shadow-lg">
@@ -323,19 +338,15 @@
         </div>
     </div>
 
-    <!-- 9. 모바일 상세 모달 (구조 개선: Body 직계로 이동 & 헤더 고정 & 제휴카드 항목 추가) -->
+    <!-- 9. 모바일 상세 모달 -->
     <div id="mobile-detail-modal" class="hidden fixed inset-0 z-[9990] bg-white md:bg-black/60 md:backdrop-blur-sm overflow-hidden w-full h-full flex items-center justify-center p-0 md:p-4">
         <div class="bg-slate-50 w-full h-full md:h-auto md:max-h-[90vh] md:rounded-[2.5rem] shadow-2xl relative flex flex-col">
-            
-            <!-- Fixed Header -->
             <div class="sticky top-0 bg-white z-30 px-4 py-4 border-b border-slate-200 flex justify-between items-center shadow-sm shrink-0">
                 <button onclick="closeMobileModal()" class="flex items-center gap-2 text-slate-800 font-bold text-lg p-1">
                     <i data-lucide="arrow-left" class="w-6 h-6"></i> 뒤로가기
                 </button>
                 <span class="text-red-600 font-bold text-xs tracking-wider border border-red-100 bg-red-50 px-2 py-1 rounded-full">KT OFFICIAL</span>
             </div>
-            
-            <!-- Scrollable Content -->
             <div class="flex-1 overflow-y-auto p-5 md:p-10 grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8">
                 <div class="lg:col-span-5 flex flex-col">
                     <div class="bg-white rounded-[2rem] p-6 mb-6 flex items-center justify-center border border-slate-200 shadow-sm relative overflow-hidden h-64 md:h-auto">
@@ -346,7 +357,6 @@
                         <h3 id="dt-title" class="text-2xl font-black text-slate-900 mb-1">상품명</h3>
                         <p class="text-slate-500 font-medium text-sm">선택하신 모델로 전문 상담이 접수됩니다.</p>
                     </div>
-                    <!-- 가격 명세서 -->
                     <div id="special-price-box" class="hidden bg-slate-50 border border-slate-200 rounded-2xl p-5 shadow-inner mb-4">
                         <h4 class="text-sm font-bold text-slate-500 mb-3 border-b border-slate-200 pb-2">지원금 및 할부원금 상세</h4>
                         <div class="space-y-1.5">
@@ -357,7 +367,6 @@
                         </div>
                     </div>
                 </div>
-                
                 <div class="lg:col-span-7 pb-10 md:pb-0">
                     <form id="mobile-form" onsubmit="submitMobileOrder(event)">
                         <div id="special-condition-alert" class="hidden mb-6 bg-red-50 border-l-4 border-red-500 p-4 rounded-r-xl shadow-sm">
@@ -379,28 +388,15 @@
                                 <div>
                                     <label class="text-xs font-bold text-slate-600 mb-1 block pl-1">보험 가입 여부</label>
                                     <div class="grid grid-cols-2 gap-2">
-                                        <label class="cursor-pointer block w-full">
-                                            <input type="radio" name="special_ins" value="가입" class="peer hidden" checked>
-                                            <div class="w-full py-3 text-center bg-white border border-slate-200 rounded-xl text-slate-500 font-bold peer-checked:bg-red-500 peer-checked:text-white peer-checked:border-red-500 transition shadow-sm text-sm">가입</div>
-                                        </label>
-                                        <label class="cursor-pointer block w-full">
-                                            <input type="radio" name="special_ins" value="미가입" class="peer hidden">
-                                            <div class="w-full py-3 text-center bg-white border border-slate-200 rounded-xl text-slate-500 font-bold peer-checked:bg-slate-700 peer-checked:text-white peer-checked:border-slate-700 transition shadow-sm text-sm">미가입</div>
-                                        </label>
+                                        <label class="cursor-pointer block w-full"><input type="radio" name="special_ins" value="가입" class="peer hidden" checked><div class="w-full py-3 text-center bg-white border border-slate-200 rounded-xl text-slate-500 font-bold peer-checked:bg-red-500 peer-checked:text-white peer-checked:border-red-500 transition shadow-sm text-sm">가입</div></label>
+                                        <label class="cursor-pointer block w-full"><input type="radio" name="special_ins" value="미가입" class="peer hidden"><div class="w-full py-3 text-center bg-white border border-slate-200 rounded-xl text-slate-500 font-bold peer-checked:bg-slate-700 peer-checked:text-white peer-checked:border-slate-700 transition shadow-sm text-sm">미가입</div></label>
                                     </div>
                                 </div>
-                                <!-- [NEW] 제휴카드 항목 추가 -->
                                 <div>
                                     <label class="text-xs font-bold text-slate-600 mb-1 block pl-1">제휴카드 할인 (안내)</label>
                                     <div class="grid grid-cols-2 gap-2">
-                                        <label class="cursor-pointer block w-full">
-                                            <input type="radio" name="special_card" value="상담신청" class="peer hidden" checked>
-                                            <div class="w-full py-3 text-center bg-white border border-slate-200 rounded-xl text-slate-500 font-bold peer-checked:bg-blue-500 peer-checked:text-white peer-checked:border-blue-500 transition shadow-sm text-sm">상담신청</div>
-                                        </label>
-                                        <label class="cursor-pointer block w-full">
-                                            <input type="radio" name="special_card" value="미신청" class="peer hidden">
-                                            <div class="w-full py-3 text-center bg-white border border-slate-200 rounded-xl text-slate-500 font-bold peer-checked:bg-slate-700 peer-checked:text-white peer-checked:border-slate-700 transition shadow-sm text-sm">미신청</div>
-                                        </label>
+                                        <label class="cursor-pointer block w-full"><input type="radio" name="special_card" value="상담신청" class="peer hidden" checked><div class="w-full py-3 text-center bg-white border border-slate-200 rounded-xl text-slate-500 font-bold peer-checked:bg-blue-500 peer-checked:text-white peer-checked:border-blue-500 transition shadow-sm text-sm">상담신청</div></label>
+                                        <label class="cursor-pointer block w-full"><input type="radio" name="special_card" value="미신청" class="peer hidden"><div class="w-full py-3 text-center bg-white border border-slate-200 rounded-xl text-slate-500 font-bold peer-checked:bg-slate-700 peer-checked:text-white peer-checked:border-slate-700 transition shadow-sm text-sm">미신청</div></label>
                                     </div>
                                 </div>
                                 <div>
@@ -425,6 +421,22 @@
 
     <!-- 스크립트 -->
     <script>
+        // 전역 변수 설정 (설정값을 DOM에 적용)
+        function applyConfig() {
+            document.getElementById('header-logo-img').src = SITE_CONFIG.info.logoImg;
+            document.getElementById('header-logo-text').innerText = SITE_CONFIG.info.logoText;
+            document.getElementById('footer-company').innerText = SITE_CONFIG.footer.companyName;
+            document.getElementById('footer-owner').innerText = SITE_CONFIG.footer.owner;
+            document.getElementById('footer-license').innerText = SITE_CONFIG.footer.license;
+            document.getElementById('footer-address').innerText = SITE_CONFIG.footer.address;
+            document.getElementById('footer-report').innerText = SITE_CONFIG.footer.report;
+            
+            document.getElementById('header-phone-link').href = `tel:${SITE_CONFIG.info.phone}`;
+            document.getElementById('consult-phone-link').href = `tel:${SITE_CONFIG.info.phone}`;
+            document.getElementById('kakao-btn').href = SITE_CONFIG.info.kakaoUrl;
+        }
+
+        // 스크롤 함수
         function scrollToSection(id) {
             const element = document.getElementById(id);
             if (element) {
@@ -434,24 +446,50 @@
         }
         function toggleConsultMenu() { document.getElementById('consult-menu-modal').classList.toggle('hidden'); }
         
+        // 폼 데이터 수집 헬퍼
+        function getFormData(isSpecial) {
+            const name = document.getElementById('val-name').value;
+            const phone = document.getElementById('val-phone').value;
+            if(!name || !phone) { alert('이름과 연락처를 입력해주세요.'); return null; }
+
+            let text = "";
+            if(isSpecial && window.selectedItem) {
+                 const install = document.getElementById('val-special-install').value;
+                 const insurance = document.querySelector('input[name="special_ins"]:checked').value;
+                 const card = document.querySelector('input[name="special_card"]:checked').value;
+                 const vas = document.getElementById('val-special-vas').value;
+                 const price = document.getElementById('price-final').innerText;
+                 text = `[특가신청]\n성함: ${name}\n연락처: ${phone}\n모델: ${window.selectedItem.name}\n요금제: ${window.selectedItem.mandatoryPlan}\n기기값: ${price}\n조건: ${install}, 보험${insurance}, ${card}, ${vas}`;
+            } else {
+                 // 일반/빠른상담 로직 (단순화)
+                 text = `[상담신청]\n성함: ${name}\n연락처: ${phone}\n(상세 내용은 상담 시 확인)`;
+            }
+            return text;
+        }
+
+        // 카톡 전송 기능 (클립보드 복사 + 카톡 열기)
+        function sendToKakao() {
+            // 현재 모달 상태 확인
+            const isSpecial = !document.getElementById('special-condition-alert').classList.contains('hidden');
+            const text = getFormData(isSpecial);
+            if(!text) return;
+
+            navigator.clipboard.writeText(text).then(() => {
+                alert("신청 내용이 복사되었습니다.\n열리는 카카오톡 채팅창에 '붙여넣기' 해주세요!");
+                window.open(SITE_CONFIG.info.kakaoUrl, '_blank');
+            }).catch(err => {
+                alert("복사 실패. 수동으로 입력해주세요.");
+                window.open(SITE_CONFIG.info.kakaoUrl, '_blank');
+            });
+        }
+
         // [모바일 & 특가 로직]
         (function(){
             if (window.lucide) { lucide.createIcons(); }
             
-            // 특가 상품 데이터 (가격 업데이트 완료)
-            const SPECIAL_PRODUCTS = [
-                { id: 'zflip7', brand: 'SAMSUNG', name: '갤럭시 Z 플립 7', img: 'https://i.ibb.co/yFPsLH8C/f766.jpg', badge: '특가', mandatoryPlan: '초이스 베이직(9만)', price: 1485000, publicSupport: 500000, addSupport: 350000 },
-                { id: 'zfold7', brand: 'SAMSUNG', name: '갤럭시 Z 폴드 7', img: 'https://i.ibb.co/gbLrGSQv/f966.jpg', badge: '프리미엄', mandatoryPlan: '초이스 베이직(9만)', price: 2379300, publicSupport: 500000, addSupport: 350000 },
-                { id: 's25', brand: 'SAMSUNG', name: '갤럭시 S25', img: 'https://i.ibb.co/BhsV2vM/s931.jpg', badge: '최신상', mandatoryPlan: '초이스 베이직(9만)', price: 1155000, publicSupport: 500000, addSupport: 350000 },
-                { id: 'ip17', brand: 'APPLE', name: '아이폰 17', img: 'https://i.ibb.co/60GKwz8T/aip17.jpg', badge: '사전예약', mandatoryPlan: '초이스 베이직(9만)', price: 1287000, publicSupport: 450000, addSupport: 200000 },
-                { id: 'ip17p', brand: 'APPLE', name: '아이폰 17 Pro', img: 'https://i.ibb.co/BK6XfdZd/aip17p.jpg', badge: '티타늄', mandatoryPlan: '초이스 베이직(9만)', price: 1782000, publicSupport: 450000, addSupport: 200000 },
-                { id: 'ip17pm', brand: 'APPLE', name: '아이폰 17 Pro Max', img: 'https://i.ibb.co/TM5mcm2H/aip17pm.jpg', badge: '최고성능', mandatoryPlan: '초이스 베이직(9만)', price: 1980000, publicSupport: 450000, addSupport: 200000 },
-                { id: 'ip_air', brand: 'APPLE', name: '아이폰 에어', img: 'https://i.ibb.co/GSfGqG7/aipa.jpg', badge: 'SLIM', mandatoryPlan: '초이스 베이직(9만)', price: 1584000, publicSupport: 450000, addSupport: 200000 },
-                { id: 'jump4', brand: 'SAMSUNG', name: '갤럭시 점프 4', img: 'https://i.ibb.co/pBpr4WCm/m366.jpg', badge: '공짜폰', mandatoryPlan: '심플 30GB(6.1만)', price: 449900, publicSupport: 363000, addSupport: 86900 },
-                { id: 'a17', brand: 'SAMSUNG', name: '갤럭시 A17', img: 'https://i.ibb.co/1fzPxCdS/a175.jpg', badge: '효도폰', mandatoryPlan: '37,000원 요금제', price: 319000, publicSupport: 211000, addSupport: 108000 }
-            ];
-
-            let selectedItem = null;
+            // 특가 상품 데이터는 SITE_CONFIG에서 가져옴
+            const SPECIAL_PRODUCTS = SITE_CONFIG.specialProducts;
+            window.selectedItem = null;
 
             // 특가 그리드 렌더링
             const grid = document.getElementById('special-product-grid');
@@ -472,11 +510,11 @@
 
             // 모달 열기 (특가 모드 전용)
             window.openMobileModal = function(id) {
-                selectedItem = SPECIAL_PRODUCTS.find(p => p.id === id);
-                if(!selectedItem) return;
+                window.selectedItem = SPECIAL_PRODUCTS.find(p => p.id === id);
+                if(!window.selectedItem) return;
 
-                document.getElementById('dt-img').src = selectedItem.img;
-                document.getElementById('dt-title').innerText = selectedItem.name;
+                document.getElementById('dt-img').src = window.selectedItem.img;
+                document.getElementById('dt-title').innerText = window.selectedItem.name;
                 document.getElementById('mobile-form').reset();
                 
                 const specialBadge = document.getElementById('modal-special-badge');
@@ -489,13 +527,13 @@
                 specialCondition.classList.remove('hidden');
                 specialOptionsSection.classList.remove('hidden');
 
-                document.getElementById('price-factory').innerText = selectedItem.price.toLocaleString() + '원';
-                document.getElementById('price-public').innerText = '-' + selectedItem.publicSupport.toLocaleString() + '원';
-                document.getElementById('price-add').innerText = '-' + selectedItem.addSupport.toLocaleString() + '원';
+                document.getElementById('price-factory').innerText = window.selectedItem.price.toLocaleString() + '원';
+                document.getElementById('price-public').innerText = '-' + window.selectedItem.publicSupport.toLocaleString() + '원';
+                document.getElementById('price-add').innerText = '-' + window.selectedItem.addSupport.toLocaleString() + '원';
                 
-                const finalPrice = selectedItem.price - selectedItem.publicSupport - selectedItem.addSupport;
+                const finalPrice = window.selectedItem.price - window.selectedItem.publicSupport - window.selectedItem.addSupport;
                 document.getElementById('price-final').innerText = finalPrice <= 0 ? '0원 (전액지원)' : finalPrice.toLocaleString() + '원';
-                document.getElementById('txt-mandatory-plan').innerText = selectedItem.mandatoryPlan;
+                document.getElementById('txt-mandatory-plan').innerText = window.selectedItem.mandatoryPlan;
 
                 document.getElementById('mobile-detail-modal').classList.remove('hidden');
                 document.body.style.overflow = 'hidden';
@@ -506,25 +544,18 @@
                 document.body.style.overflow = 'auto';
             }
 
-            // 제출 로직
+            // 제출 로직 (이메일)
             window.submitMobileOrder = function(e) {
                 e.preventDefault();
-                const name = document.getElementById('val-name').value;
-                const phone = document.getElementById('val-phone').value;
-                const install = document.getElementById('val-special-install').value;
-                const insurance = document.querySelector('input[name="special_ins"]:checked').value;
-                const card = document.querySelector('input[name="special_card"]:checked').value; // [NEW] 제휴카드 값
-                const vas = document.getElementById('val-special-vas').value;
-
-                const promoText = `[특가신청]\n모델: ${selectedItem.name}\n요금제: ${selectedItem.mandatoryPlan}\n조건: 6개월 유지 필수\n기기값: ${document.getElementById('price-final').innerText}\n----------\n할부: ${install}\n보험: ${insurance}\n제휴카드: ${card}\n부가서비스: ${vas}`;
-
+                const text = getFormData(true); // 특가모드 true
+                
                 const params = {
-                    name: name,
-                    phone: phone,
+                    name: document.getElementById('val-name').value,
+                    phone: document.getElementById('val-phone').value,
                     branch: '모바일위젯접수',
                     mobile_carrier: '특가전용',
-                    desired_model: selectedItem.name,
-                    promo_item: promoText,
+                    desired_model: window.selectedItem.name,
+                    promo_item: text,
                     date: new Date().toLocaleString(),
                     manager_email: 'pbh350111@gmail.com'
                 };
@@ -578,36 +609,27 @@
             }
 
             let details = [];
-            let desiredModel = '';
-
             if(selectedProducts.internet) {
                 const speed = document.getElementById('fast-net-speed').value;
                 const tv = document.getElementById('fast-tv-plan').value;
-                details.push(`[인터넷+TV 신청]\n- 속도: ${speed || '미선택'}\n- TV: ${tv || '미선택'}`);
-                desiredModel += '인터넷/TV ';
+                details.push(`[인터넷+TV] 속도:${speed}, TV:${tv}`);
             }
-
             if(selectedProducts.mobile) {
                 const model = document.getElementById('fast-mobile-model').value;
-                details.push(`[휴대폰 신청]\n- 희망기종: ${model || '미입력'}`);
-                desiredModel += (desiredModel ? '& ' : '') + '휴대폰';
+                details.push(`[휴대폰] 희망기종:${model}`);
             }
-
-            const promoText = details.join('\n\n');
 
             const params = {
                 name: name,
                 phone: phone,
-                branch: '빠른상담신청(중복선택)',
-                desired_model: desiredModel,
-                promo_item: promoText,
+                branch: '빠른상담신청',
+                promo_item: details.join('\n'),
                 date: new Date().toLocaleString(),
                 manager_email: 'pbh350111@gmail.com'
             };
 
             emailjs.send('service_tje5nks', 'template_g02rutc', params)
             .then(() => {
-                // 성공 알림 (모달 대신 alert 사용)
                 alert('신청이 완료되었습니다! 담당자가 확인 후 빠르게 연락드리겠습니다.');
             })
             .catch((err) => {
@@ -615,58 +637,128 @@
             });
         }
 
-        // [인터넷 요금표 로직 복구]
+        // [인터넷 요금표 로직]
         (function(){
-            const PRICING_DATA = {
-                '100M': { 'genieA': { basic: ['37,400원','31,900원'], all: ['42,900원','37,400원'], ott: ['45,200원','39,700원'] }, 'genie3A': { basic: ['38,500원','33,000원'], all: ['44,000원','38,500원'], ott: ['46,300원','40,800원'] }, 'genie4': { basic: ['40,700원','35,200원'], all: ['46,200원','40,700원'], ott: ['48,500원','43,000원'] }, 'sound': { basic: ['42,900원','37,400원'], all: ['46,200원','40,700원'], ott: ['48,500원','43,000원'] } },
-                '500M': { 'genieA': { basic: ['42,900원','37,400원'], all: ['48,400원','42,900원'], ott: ['50,700원','45,200원'] }, 'genie3A': { basic: ['44,000원','38,500원'], all: ['49,500원','44,000원'], ott: ['51,800원','46,300원'] }, 'genie4': { basic: ['46,200원','40,700원'], all: ['51,700원','46,200원'], ott: ['54,000원','48,500원'] }, 'sound': { basic: ['48,400원','42,900원'], all: ['51,700원','46,200원'], ott: ['54,000원','48,500원'] } },
-                '1G': { 'genieA': { basic: ['48,400원','42,900원'], all: ['53,900원','48,400원'], ott: ['56,200원','50,700원'] }, 'genie3A': { basic: ['49,500원','44,000원'], all: ['55,000원','49,500원'], ott: ['57,300원','51,800원'] }, 'genie4': { basic: ['51,700원','46,200원'], all: ['57,200원','51,700원'], ott: ['59,500원','54,000원'] }, 'sound': { basic: ['53,900원','48,400원'], all: ['57,200원','51,700원'], ott: ['59,500원','54,000원'] } }
-            };
+            // SITE_CONFIG에서 인터넷 설정 가져오기
+            const INTERNET_CONFIG = SITE_CONFIG.internet;
+            const PRICING_DATA = INTERNET_CONFIG.prices;
+            const CARD_INFO = INTERNET_CONFIG.cards;
 
             let curSpeed = '100M';
             let curStb = 'genieA';
 
-            function render() {
-                if (!PRICING_DATA[curSpeed] || !PRICING_DATA[curSpeed][curStb]) return;
-                const data = PRICING_DATA[curSpeed][curStb];
-                
-                document.querySelectorAll('.internet-tab').forEach(el => {
-                    if(el.innerText.includes(curSpeed)) el.classList.add('active');
-                    else el.classList.remove('active');
+            // ID 매핑 (HTML과 JS 연결)
+            const speedBtnIds = { '100M': 'btn-100m', '500M': 'btn-500m', '1G': 'btn-1g' };
+
+            // 인터넷 상품 카드 생성 함수
+            function renderInternetCards() {
+                const grid = document.getElementById('internet-plan-grid');
+                if(!grid) return;
+
+                // 3개 카드 생성 (plan1, plan2, plan3)
+                const cardKeys = ['plan1', 'plan2', 'plan3'];
+                let html = '';
+
+                cardKeys.forEach(key => {
+                    const info = CARD_INFO[key];
+                    const badgeHtml = info.badge ? `<div class="absolute top-0 right-0 bg-red-600 text-white text-[10px] px-2 py-1 rounded-bl-xl font-bold">${info.badge}</div>` : '';
+                    const borderClass = info.badge ? 'border-2 border-red-500 bg-red-50/10' : ''; // 추천 카드 강조
+
+                    html += `
+                        <div class="rate-card relative ${borderClass} group">
+                            ${badgeHtml}
+                            <div class="mb-4">
+                                <h3 class="text-lg font-bold text-slate-900">${info.name}</h3>
+                                <p class="text-xs text-slate-500 mt-1">${info.desc}</p>
+                            </div>
+                            <div class="space-y-2 mb-6">
+                                <div class="flex justify-between text-xs text-slate-500">
+                                    <span>3년 약정</span><span class="line-through decoration-slate-400" id="price-${key}-org">0원</span>
+                                </div>
+                                <div class="flex justify-between items-end border-t border-slate-100 pt-2">
+                                    <span class="font-bold text-slate-700 text-sm">결합 시</span>
+                                    <span class="text-xl md:text-2xl font-black text-red-600" id="price-${key}-sale">0원</span>
+                                </div>
+                            </div>
+                            <button onclick="requestConsult('인터넷')" class="w-full ${info.badge ? 'bg-red-600 text-white hover:bg-red-700' : 'border border-slate-300 text-slate-700 hover:bg-slate-50'} py-3 rounded-xl font-bold text-sm transition shadow">간편 상담 신청</button>
+                        </div>
+                    `;
                 });
+
+                grid.innerHTML = html;
+            }
+
+            function render() {
+                // 1. 탭 활성화
+                for (const speed in speedBtnIds) {
+                    const btn = document.getElementById(speedBtnIds[speed]);
+                    if (speed === curSpeed) btn.classList.add('active');
+                    else btn.classList.remove('active');
+                }
                 
+                // 2. 셋탑박스 활성화
                 const stbNames = {'genieA':0, 'genie3A':1, 'genie4':2, 'sound':3};
                 document.querySelectorAll('.stb-btn').forEach((el, idx) => {
                     if(idx === stbNames[curStb]) el.classList.add('active');
                     else el.classList.remove('active');
                 });
 
-                const speedTitles = {'100M':'슬림', '500M':'베이직', '1G':'에센스'};
-                const stbTitles = {'genieA':'기가지니A', 'genie3A':'기가지니3', 'genie4':'지니4', 'sound':'사운드바'};
+                // 3. 가격 업데이트
+                if (!PRICING_DATA[curSpeed] || !PRICING_DATA[curSpeed][curStb]) return;
+                const data = PRICING_DATA[curSpeed][curStb];
                 
-                const speedTitleEl = document.getElementById('ui-speed-title');
-                if(speedTitleEl) speedTitleEl.innerText = speedTitles[curSpeed];
+                // plan1, plan2, plan3에 대한 가격 매핑
+                const mapping = { 'plan1': 'basic', 'plan2': 'all', 'plan3': 'ott' }; // config key -> pricing key mapping (if different, but let's assume direct mapping in CONFIG)
+                // Actually, SITE_CONFIG structure matches keys directly: plan1, plan2, plan3
                 
-                document.querySelectorAll('.ui-stb-name').forEach(el => el.innerText = stbTitles[curStb] + ' 셋탑');
-
-                const priceElements = {
-                    'price-basic-org': data.basic[0], 'price-basic-sale': data.basic[1],
-                    'price-all-org': data.all[0], 'price-all-sale': data.all[1],
-                    'price-ott-org': data.ott[0], 'price-ott-sale': data.ott[1]
-                };
-
-                for (const [id, value] of Object.entries(priceElements)) {
-                    const el = document.getElementById(id);
-                    if(el) el.innerText = value;
-                }
+                ['plan1', 'plan2', 'plan3'].forEach(key => {
+                    const prices = data[key]; // [org, sale]
+                    if(prices) {
+                        const elOrg = document.getElementById(`price-${key}-org`);
+                        const elSale = document.getElementById(`price-${key}-sale`);
+                        if(elOrg) elOrg.innerText = prices[0];
+                        if(elSale) elSale.innerText = prices[1];
+                    }
+                });
             }
+
+            // 초기화 및 이벤트 연결
+            renderInternetCards(); // 카드 HTML 생성
+            render(); // 가격 데이터 채우기
 
             window.changeSpeed = function(s) { curSpeed = s; render(); };
             window.changeSettop = function(s) { curStb = s; render(); };
-            window.requestConsult = function() { window.open('http://pf.kakao.com/_XRxaan/chat', '_blank'); };
-
-            render();
+            
+            // 상담 신청 버튼 (하단 폼으로 이동 + 인터넷 자동선택)
+            window.requestConsult = function() { 
+                const formSection = document.getElementById('section-consult-form');
+                if(formSection) {
+                    const headerOffset = 60;
+                    const elementPosition = formSection.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                    window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+                    
+                    const chkInternet = document.getElementById('chk-internet');
+                    const chkMobile = document.getElementById('chk-mobile');
+                    
+                    // 모바일 해제, 인터넷 체크
+                    if (chkMobile.checked) {
+                        chkMobile.checked = false;
+                        updateConsultUI('mobile');
+                        selectedProducts.mobile = false;
+                    }
+                    if (!chkInternet.checked) {
+                        chkInternet.checked = true;
+                        updateConsultUI('internet');
+                        selectedProducts.internet = true;
+                    }
+                    setTimeout(() => document.getElementById('fast-name').focus(), 500);
+                }
+            };
         })();
+
+        // 설정값 적용
+        applyConfig();
     </script>
 </body>
 </html>
