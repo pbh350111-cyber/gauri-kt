@@ -74,6 +74,19 @@
         .stb-btn.active { @apply bg-black text-white font-bold; }
         .rate-card { @apply border border-slate-200 rounded-2xl p-5 md:p-6 transition shadow-sm bg-white relative overflow-hidden; }
         .rate-card:hover { @apply border-red-500 shadow-md; transform: translateY(-2px); }
+
+        /* 슬라이드 애니메이션 */
+        .slide-image {
+            transition: opacity 1s ease-in-out;
+        }
+        .slide-hidden {
+            opacity: 0;
+            z-index: 0;
+        }
+        .slide-active {
+            opacity: 1;
+            z-index: 1;
+        }
     </style>
 </head>
 <body class="bg-slate-50 pb-24">
@@ -87,74 +100,85 @@
             info: {
                 logoImg: "https://i.ibb.co/cXVFKzLj/ktlogo.png", // KT 로고 이미지 주소
                 logoText: "MALL",         // 로고 옆 텍스트 내용
-                logoTextSize: "text-2xl", // 로고 옆 텍스트 크기 (text-xl, text-2xl, text-3xl, text-4xl 등)
-                logoTextColor: "text-[#DC000C]", // 로고 옆 텍스트 색상 (KT 레드: #DC000C, 검정: text-black 등)
+                logoTextSize: "text-3xl", // 로고 옆 텍스트 크기
+                logoTextColor: "text-[#DC000C]", // 로고 옆 텍스트 색상
                 phone: "010-2141-0137",   // 상담 전화번호
                 kakaoUrl: "http://pf.kakao.com/_XRxaan/chat", // 카카오톡 채널 링크
                 emailJsKey: "oM5C3k8SXXow-GN5v" // EmailJS Public Key
             },
 
-            // 2. 이달의 특가 상품 목록
-            // (id: 고유영문명, brand: 브랜드, name: 모델명, img: 이미지주소) -> badge 속성은 삭제됨(사용안함)
-            // (mandatoryPlan: 필수요금제, price: 출고가, publicSupport: 공통지원금, addSupport: 추가지원금)
+            // 2. 메인 배너 설정 (NEW: 슬라이드 기능 추가)
+            banner: {
+                title: "특가 폰 시리즈<br>즉시 개통 가능!", // 줄바꿈은 <br> 사용
+                subtitle: "공시지원금 + 추가지원금 15% MAX 적용",
+                badge: "KT 온라인몰",
+                bgColor: "#DC000C", // 배너 배경색 (이미지 로딩 전이나 투명도 있을때 보임)
+                // 슬라이드 이미지 (최대 3개, URL 입력)
+                images: [
+                    "https://i.ibb.co/F4SJ60t7/IMG-9757.jpg/photo-1556742049-0cfed4f7a07d?q=80&w=1000&auto=format&fit=crop", // 이미지 1
+                    "https://i.ibb.co/mrfjF7yv/IMG-8999.jpg/photo-1512428559087-560fa0db79b6?q=80&w=1000&auto=format&fit=crop", // 이미지 2
+                    "https://i.ibb.co/CKYG7jJC/jini.jpg/photo-1598327105666-5b89351aff5f?q=80&w=1000&auto=format&fit=crop"  // 이미지 3
+                ]
+            },
+
+            // 3. 이달의 특가 상품 목록
             specialProducts: [
                 { 
-                    id: 'zflip7', brand: 'SAMSUNG', name: '갤럭시 Z 플립 7', img: 'https://i.ibb.co/SDt72p2v/z-7.png', 
+                    id: 'zflip7', brand: 'SAMSUNG', name: '갤럭시 Z 플립 7', img: 'https://i.ibb.co/yFPsLH8C/f766.jpg', 
                     mandatoryPlan: '초이스 베이직(9만)', 
                     price: 1485000, publicSupport: 500000, addSupport: 350000
                 },
                 { 
-                    id: 'zfold7', brand: 'SAMSUNG', name: '갤럭시 Z 폴드 7', img: 'https://i.ibb.co/Z1GfT3p2/z-7.png', 
+                    id: 'zfold7', brand: 'SAMSUNG', name: '갤럭시 Z 폴드 7', img: 'https://i.ibb.co/gbLrGSQv/f966.jpg', 
                     mandatoryPlan: '초이스 베이직(9만)', 
                     price: 2379300, publicSupport: 500000, addSupport: 350000
                 },
                 { 
-                    id: 's25', brand: 'SAMSUNG', name: '갤럭시 S25', img: 'https://i.ibb.co/kgh0hHrd/s25.png', 
+                    id: 's25', brand: 'SAMSUNG', name: '갤럭시 S25', img: 'https://i.ibb.co/BhsV2vM/s931.jpg', 
                     mandatoryPlan: '초이스 베이직(9만)', 
                     price: 1155000, publicSupport: 500000, addSupport: 350000 
                 },
                 { 
-                    id: 'ip17', brand: 'APPLE', name: '아이폰 17', img: 'https://i.ibb.co/Z18ssP9y/17.png', 
+                    id: 'ip17', brand: 'APPLE', name: '아이폰 17', img: 'https://i.ibb.co/60GKwz8T/aip17.jpg', 
                     mandatoryPlan: '초이스 베이직(9만)', 
                     price: 1287000, publicSupport: 450000, addSupport: 200000 
                 },
                 { 
-                    id: 'ip17p', brand: 'APPLE', name: '아이폰 17 Pro', img: 'https://i.ibb.co/Y7ZpFhjJ/17.png', 
+                    id: 'ip17p', brand: 'APPLE', name: '아이폰 17 Pro', img: 'https://i.ibb.co/BK6XfdZd/aip17p.jpg', 
                     mandatoryPlan: '초이스 베이직(9만)', 
                     price: 1782000, publicSupport: 450000, addSupport: 200000 
                 },
                 { 
-                    id: 'ip17pm', brand: 'APPLE', name: '아이폰 17 Pro Max', img: 'https://i.ibb.co/fzj6nqvF/17.png', 
+                    id: 'ip17pm', brand: 'APPLE', name: '아이폰 17 Pro Max', img: 'https://i.ibb.co/TM5mcm2H/aip17pm.jpg', 
                     mandatoryPlan: '초이스 베이직(9만)', 
                     price: 1980000, publicSupport: 450000, addSupport: 200000 
                 },
                 { 
-                    id: 'ip_air', brand: 'APPLE', name: '아이폰 에어', img: 'https://i.ibb.co/mVNTdCrZ/image.png', 
+                    id: 'ip_air', brand: 'APPLE', name: '아이폰 에어', img: 'https://i.ibb.co/GSfGqG7/aipa.jpg', 
                     mandatoryPlan: '초이스 베이직(9만)', 
                     price: 1584000, publicSupport: 450000, addSupport: 200000 
                 },
                 { 
-                    id: 'jump4', brand: 'SAMSUNG', name: '갤럭시 점프 4', img: 'https://i.ibb.co/TMBdMD7T/4.png', 
+                    id: 'jump4', brand: 'SAMSUNG', name: '갤럭시 점프 4', img: 'https://i.ibb.co/pBpr4WCm/m366.jpg', 
                     mandatoryPlan: '심플 30GB(6.1만)', 
                     price: 449900, publicSupport: 363000, addSupport: 86900 
                 },
                 { 
-                    id: 'a17', brand: 'SAMSUNG', name: '갤럭시 A17', img: 'https://i.ibb.co/bgLNScBz/a17.png', 
+                    id: 'a17', brand: 'SAMSUNG', name: '갤럭시 A17', img: 'https://i.ibb.co/1fzPxCdS/a175.jpg', 
                     mandatoryPlan: '37,000원 요금제', 
                     price: 319000, publicSupport: 211000, addSupport: 108000 
                 }
             ],
 
-            // 3. 인터넷+TV 요금 및 정보 설정
+            // 4. 인터넷+TV 요금 및 정보 설정
             internet: {
-                // (1) 상품 카드 정보 (이름, 설명, 뱃지)
+                // (1) 상품 카드 정보
                 cards: {
                     plan1: { name: "지니 TV 베이직", desc: "230여개 채널", badge: "" },
                     plan2: { name: "지니 TV 모든G", desc: "250여개 채널+VOD", badge: "강력추천" },
                     plan3: { name: "지니 TV 디즈니+", desc: "디즈니+ OTT 결합", badge: "" }
                 },
                 // (2) 요금 데이터 [월 요금(약정), 결합 할인가]
-                // 구조: { '속도': { '셋탑박스': { plan1: [원래,결합], plan2: [원래,결합], plan3: [원래,결합] } } }
                 prices: {
                     '100M': { // 슬림
                         'genieA': { plan1: ['37,400원','31,900원'], plan2: ['42,900원','37,400원'], plan3: ['45,200원','39,700원'] },
@@ -177,7 +201,7 @@
                 }
             },
 
-            // 4. 하단 사업자 정보
+            // 5. 하단 사업자 정보
             footer: {
                 companyName: "(주)kt 가우리엔터프라이즈",
                 owner: "홍길동",
@@ -193,12 +217,11 @@
     </script>
     <!-- ========================================== -->
 
-    <!-- 1. 헤더 (수정됨) -->
+    <!-- 1. 헤더 -->
     <header class="bg-white sticky top-0 z-50 shadow-sm">
         <div class="flex justify-between items-center px-4 py-3">
             <div class="flex items-center cursor-pointer" onclick="window.scrollTo(0,0)">
                 <img src="" id="header-logo-img" alt="KT Logo" class="h-10 mr-2 object-contain">
-                <!-- 로고 텍스트 (설정값 적용 대상) -->
                 <span class="font-black tracking-tighter" id="header-logo-text">MALL</span>
             </div>
             <div class="flex gap-4 text-gray-600">
@@ -213,14 +236,21 @@
             </ul>
         </nav>
     </header>
+    <!-- 2. 메인 배너 (슬라이드 적용 & 반응형 높이 수정) -->
+    <!-- h-80 고정 -> h-64(모바일) md:h-96(태블릿/PC) 로 변경 -->
+    <section id="main-banner-section" class="relative w-full h-64 md:h-96 flex items-center justify-center overflow-hidden transition-colors duration-500">
+        <!-- 슬라이드 이미지 컨테이너 -->
+        <div id="banner-slider" class="absolute inset-0 w-full h-full">
+            <!-- JS로 이미지 삽입됨 -->
+        </div>
+        <!-- 오버레이 (텍스트 가독성) -->
+        <div class="absolute inset-0 bg-black opacity-30 z-0"></div>
 
-    <!-- 2. 메인 배너 -->
-    <section class="relative w-full h-80 kt-red flex items-center justify-center overflow-hidden">
-        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1556742049-0cfed4f7a07d?q=80&w=1000&auto=format&fit=crop')] bg-cover bg-center opacity-30 mix-blend-multiply"></div>
+        <!-- 텍스트 내용 -->
         <div class="relative z-10 text-center text-white px-4">
-            <span class="bg-white text-red-600 px-2 py-1 rounded-full text-xs font-bold mb-2 inline-block shadow-md">KT 온라인몰</span>
-            <h1 class="text-3xl md:text-4xl font-black mb-3 text-shadow leading-tight">특가 폰 시리즈<br>즉시 개통 가능!</h1>
-            <p class="text-sm md:text-lg font-medium text-gray-100 bg-black/20 inline-block px-4 py-1 rounded-full backdrop-blur-sm">공시지원금 + 추가지원금 15% MAX 적용</p>
+            <span id="banner-badge" class="bg-white text-red-600 px-2 py-1 rounded-full text-xs font-bold mb-2 inline-block shadow-md"></span>
+            <h1 id="banner-title" class="text-3xl md:text-5xl font-black mb-3 text-shadow leading-tight"></h1>
+            <p id="banner-subtitle" class="text-sm md:text-xl font-medium text-gray-100 bg-black/20 inline-block px-4 py-1 rounded-full backdrop-blur-sm"></p>
         </div>
     </section>
 
@@ -277,8 +307,8 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div id="internet-plan-grid" class="contents"></div>
+                <div id="internet-plan-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Cards will be injected here -->
                 </div>
             </div>
         </div>
@@ -301,6 +331,8 @@
                         <input type="tel" id="fast-phone" required placeholder="1234-5678" class="w-2/3 bg-gray-100 border border-gray-300 rounded-xl p-3">
                     </div>
                 </div>
+
+                <!-- 상품 선택 -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">관심 상품 선택 (중복 가능)</label>
                     <div class="flex gap-2 mb-3">
@@ -313,6 +345,8 @@
                             <div class="absolute inset-0 border-2 border-red-500 rounded-xl hidden" id="border-mobile"></div>
                         </label>
                     </div>
+
+                    <!-- 인터넷 상세 옵션 -->
                     <div id="consult-opt-internet" class="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
                         <p class="text-xs font-bold text-slate-600 mb-1"><i class="fas fa-wifi text-red-500 mr-1"></i> 인터넷 속도 & TV 선택</p>
                         <select id="fast-net-speed" class="custom-select bg-white">
@@ -328,11 +362,14 @@
                             <option value="디즈니+">지니 TV 디즈니+</option>
                         </select>
                     </div>
+
+                    <!-- 휴대폰 상세 옵션 -->
                     <div id="consult-opt-mobile" class="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-200 hidden">
                         <p class="text-xs font-bold text-slate-600 mb-1"><i class="fas fa-mobile-alt text-red-500 mr-1"></i> 희망 기종 입력 (선택)</p>
                         <input type="text" id="fast-mobile-model" placeholder="예: 갤럭시 S25, 아이폰 16" class="custom-input bg-white">
                     </div>
                 </div>
+
                 <button type="submit" class="w-full kt-red text-white font-bold text-lg py-4 rounded-xl shadow-lg mt-2 hover:bg-red-700 transition">무료 상담 접수하기</button>
             </form>
         </div>
@@ -473,6 +510,11 @@
             // 로고 텍스트 스타일 적용
             logoTextEl.className = `font-black tracking-tighter ${SITE_CONFIG.info.logoTextSize} ${SITE_CONFIG.info.logoTextColor}`;
 
+            document.getElementById('banner-badge').innerText = SITE_CONFIG.banner.badge;
+            document.getElementById('banner-title').innerHTML = SITE_CONFIG.banner.title;
+            document.getElementById('banner-subtitle').innerText = SITE_CONFIG.banner.subtitle;
+            document.getElementById('main-banner-section').style.backgroundColor = SITE_CONFIG.banner.bgColor;
+
             document.getElementById('footer-company').innerText = SITE_CONFIG.footer.companyName;
             document.getElementById('footer-owner').innerText = SITE_CONFIG.footer.owner;
             document.getElementById('footer-license').innerText = SITE_CONFIG.footer.license;
@@ -482,6 +524,37 @@
             document.getElementById('header-phone-link').href = `tel:${SITE_CONFIG.info.phone}`;
             document.getElementById('consult-phone-link').href = `tel:${SITE_CONFIG.info.phone}`;
             document.getElementById('kakao-btn').href = SITE_CONFIG.info.kakaoUrl;
+        }
+
+        // 메인 배너 슬라이드 로직 (NEW)
+        function startMainBannerSlider() {
+            const container = document.getElementById('banner-slider');
+            const images = SITE_CONFIG.banner.images;
+            if (!container || !images || images.length === 0) return;
+
+            // 이미지 요소 생성
+            images.forEach((url, index) => {
+                const div = document.createElement('div');
+                div.className = `absolute inset-0 bg-cover bg-center slide-image ${index === 0 ? 'slide-active' : 'slide-hidden'}`;
+                div.style.backgroundImage = `url('${url}')`;
+                container.appendChild(div);
+            });
+
+            // 1장 이상일 경우 슬라이드 시작
+            if (images.length > 1) {
+                let currentIndex = 0;
+                setInterval(() => {
+                    const slides = container.children;
+                    // 현재 이미지 숨김
+                    slides[currentIndex].classList.replace('slide-active', 'slide-hidden');
+                    
+                    // 다음 이미지 인덱스 계산
+                    currentIndex = (currentIndex + 1) % images.length;
+                    
+                    // 다음 이미지 표시
+                    slides[currentIndex].classList.replace('slide-hidden', 'slide-active');
+                }, 3000); // 3초 간격
+            }
         }
 
         // 스크롤 함수
@@ -804,7 +877,8 @@
 
         // 설정값 적용
         applyConfig();
+        // 메인 배너 슬라이드 시작
+        startMainBannerSlider();
     </script>
 </body>
 </html>
-
