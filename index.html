@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KT 공식 직영몰</title>
+    <!-- 1. 필수 라이브러리 로드 -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- EmailJS -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script type="text/javascript">
         (function(){
@@ -16,29 +18,55 @@
     </script>
     
     <style>
+        /* 폰트 및 기본 설정 */
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
         @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
         body { font-family: 'Noto Sans KR', sans-serif; }
+        
         .kt-red { background-color: #DC000C; }
         .kt-text-red { color: #DC000C; }
         .text-shadow { text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+
+        #kt-mobile-widget { font-family: 'Pretendard', sans-serif; letter-spacing: -0.02em; }
+        
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* 공통 스타일 */
-        .custom-select { @apply w-full bg-slate-50 border border-slate-200 text-slate-700 text-base rounded-2xl focus:ring-2 focus:ring-red-500 focus:border-red-500 block w-full p-4 appearance-none font-bold transition-colors hover:bg-white cursor-pointer; background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e"); background-position: right 1rem center; background-repeat: no-repeat; background-size: 1.25em 1.25em; }
-        .custom-input { @apply bg-slate-50 border border-slate-200 text-slate-900 text-base rounded-2xl focus:ring-2 focus:ring-red-500 focus:border-red-500 block w-full p-4 outline-none transition-all focus:bg-white; }
-        .select-btn { @apply w-full border border-slate-200 bg-white rounded-2xl transition-all duration-200 relative overflow-hidden p-5 text-center text-sm font-bold text-slate-500 hover:shadow-md cursor-pointer; }
-        .select-btn:hover { @apply border-slate-400 bg-slate-50 text-slate-700; }
-        .select-btn.active { @apply border-red-500 bg-red-50 text-red-600 ring-2 ring-red-500 shadow-md transform scale-[1.02]; }
-        .select-btn.disabled { @apply bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed opacity-70 hover:border-gray-200 hover:bg-gray-100 hover:text-gray-400 transform-none shadow-none; }
+        .mobile-tab { @apply px-4 py-2 rounded-full text-sm font-bold transition-all cursor-pointer border border-transparent; }
+        .mobile-tab.active { @apply bg-black text-white shadow-md; }
+        .mobile-tab.inactive { @apply text-slate-500 hover:bg-slate-100; }
+
+        .group-label { @apply text-base font-bold text-slate-800 mb-4 block flex items-center; }
+        .section-box { @apply bg-white p-6 md:p-8 rounded-3xl border border-slate-100 shadow-lg mb-8 transition-all duration-300; }
         
+        .custom-select {
+            @apply w-full bg-slate-50 border border-slate-200 text-slate-700 text-base rounded-2xl focus:ring-2 focus:ring-red-500 focus:border-red-500 block w-full p-4 appearance-none font-bold transition-colors hover:bg-white cursor-pointer;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 1rem center;
+            background-repeat: no-repeat;
+            background-size: 1.25em 1.25em;
+        }
+
+        .custom-input { @apply bg-slate-50 border border-slate-200 text-slate-900 text-base rounded-2xl focus:ring-2 focus:ring-red-500 focus:border-red-500 block w-full p-4 outline-none transition-all focus:bg-white; }
+
+        .select-btn { 
+            @apply w-full border border-slate-200 bg-white rounded-2xl transition-all duration-200 relative overflow-hidden p-5 text-center text-sm font-bold text-slate-500 hover:shadow-md cursor-pointer;
+        }
+        .select-btn:hover { @apply border-slate-400 bg-slate-50 text-slate-700; }
+        .select-btn.active { 
+            @apply border-red-500 bg-red-50 text-red-600 ring-2 ring-red-500 shadow-md transform scale-[1.02]; 
+        }
+        .select-btn.disabled {
+            @apply bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed opacity-70 hover:border-gray-200 hover:bg-gray-100 hover:text-gray-400 transform-none shadow-none;
+        }
+
+        /* 가격표 테이블 스타일 (특가 전용) */
         .price-row { @apply flex justify-between items-center py-2 text-sm text-slate-600; }
         .price-row.total { @apply border-t-2 border-slate-900 pt-4 mt-2 text-lg md:text-xl font-black text-slate-900; }
         .discount-text { @apply text-red-600 font-bold; }
 
-        /* 인터넷 요금표 전용 */
+        /* 인터넷 요금표 스타일 */
         .section-container { font-family: 'Pretendard', sans-serif; letter-spacing: -0.02em; }
         .internet-tab { @apply px-3 py-2 md:px-6 md:py-3 rounded-full border border-slate-200 text-slate-500 font-bold transition text-xs md:text-sm cursor-pointer; }
         .internet-tab.active { @apply bg-black text-white border-black; }
@@ -57,7 +85,8 @@
                 <span class="text-black">KT</span><span class="kt-text-red">MALL</span>
             </div>
             <div class="flex gap-4 text-gray-600">
-                <a href="tel:1600-0000"><i class="fas fa-phone-alt text-xl"></i></a>
+                <!-- 전화번호 업데이트 -->
+                <a href="tel:010-2141-0137"><i class="fas fa-phone-alt text-xl"></i></a>
                 <i class="fas fa-bars text-xl cursor-pointer"></i>
             </div>
         </div>
@@ -87,8 +116,9 @@
                 <h2 class="text-3xl md:text-4xl font-black text-slate-900 mb-2">🔥 이달의 특가 폰</h2>
                 <p class="text-slate-500 text-sm">공시지원금 + 추가지원금 MAX 적용 모델</p>
             </div>
+
             <div id="special-product-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- JS 로드 -->
+                <!-- 자바스크립트로 특가 상품 로드 -->
             </div>
         </div>
     </section>
@@ -192,7 +222,7 @@
         </div>
     </section>
 
-    <!-- 5. 빠른 상담 신청 폼 (수정됨: 선택 항목 복구) -->
+    <!-- 5. 빠른 상담 신청 폼 -->
     <section id="section-consult-form" class="bg-white py-12 px-5 mb-2 border-t-8 border-slate-100">
         <div class="max-w-md mx-auto">
             <h2 class="text-2xl font-bold text-center mb-2">🚀 빠른 상담 신청</h2>
@@ -210,7 +240,7 @@
                     </div>
                 </div>
 
-                <!-- 상품 선택 복구 -->
+                <!-- 상품 선택 -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">관심 상품 선택 (중복 가능)</label>
                     <div class="flex gap-2 mb-3">
@@ -265,7 +295,8 @@
 
     <!-- 7. 하단 고정 바 -->
     <div class="fixed bottom-0 left-0 w-full flex text-center z-50 h-14 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
-        <a href="#" class="w-1/2 bg-[#FAE100] text-[#3B1E1E] flex items-center justify-center gap-2 font-bold text-lg">
+        <!-- 카카오톡 링크 업데이트 -->
+        <a href="http://pf.kakao.com/_XRxaan/chat" target="_blank" class="w-1/2 bg-[#FAE100] text-[#3B1E1E] flex items-center justify-center gap-2 font-bold text-lg">
             <i class="fas fa-comment"></i> 카카오톡 상담
         </a>
         <button onclick="toggleConsultMenu()" class="w-1/2 bg-[#222] text-white flex items-center justify-center gap-2 font-bold text-lg">
@@ -279,7 +310,8 @@
         <div class="bg-white w-full md:w-80 md:rounded-3xl rounded-t-3xl p-6 relative z-10 transform transition-transform duration-300 translate-y-0 shadow-2xl">
             <h3 class="text-lg font-bold text-slate-900 mb-6 text-center">상담 방식을 선택해주세요</h3>
             <div class="flex flex-col gap-3">
-                <a href="tel:1600-0000" class="flex items-center justify-center gap-3 w-full bg-slate-100 hover:bg-slate-200 text-slate-800 py-4 rounded-xl font-bold text-lg transition border border-slate-200">
+                <!-- 전화번호 업데이트 -->
+                <a href="tel:010-2141-0137" class="flex items-center justify-center gap-3 w-full bg-slate-100 hover:bg-slate-200 text-slate-800 py-4 rounded-xl font-bold text-lg transition border border-slate-200">
                     <i class="fas fa-phone-alt text-red-600"></i> 전화 상담
                 </a>
                 <button onclick="scrollToSection('section-consult-form'); toggleConsultMenu();" class="flex items-center justify-center gap-3 w-full bg-red-600 hover:bg-red-700 text-white py-4 rounded-xl font-bold text-lg transition shadow-lg">
@@ -290,7 +322,7 @@
         </div>
     </div>
 
-    <!-- 9. 모바일 상세 모달 (Body 직계 자식으로 이동 - 특가 로직 포함) -->
+    <!-- 9. 모바일 상세 모달 -->
     <div id="mobile-detail-modal" class="hidden fixed inset-0 z-[9990] bg-white md:bg-black/60 md:backdrop-blur-sm overflow-y-auto w-full h-full flex items-center justify-center p-0 md:p-4">
         <div class="bg-slate-50 w-full max-w-5xl md:rounded-[2.5rem] shadow-2xl overflow-hidden min-h-screen md:min-h-0 md:max-h-[90vh] overflow-y-auto relative flex flex-col">
             <div class="sticky top-0 bg-white z-30 px-4 py-4 border-b border-slate-200 flex justify-between items-center shadow-sm shrink-0">
@@ -380,7 +412,7 @@
         (function(){
             if (window.lucide) { lucide.createIcons(); }
             
-            // 특가 상품 데이터 (가격 업데이트 완료)
+            // 특가 상품 데이터
             const SPECIAL_PRODUCTS = [
                 { id: 'zflip7', brand: 'SAMSUNG', name: '갤럭시 Z 플립 7', img: 'https://i.ibb.co/yFPsLH8C/f766.jpg', badge: '특가', mandatoryPlan: '초이스 베이직(9만)', price: 1485000, publicSupport: 500000, addSupport: 350000 },
                 { id: 'zfold7', brand: 'SAMSUNG', name: '갤럭시 Z 폴드 7', img: 'https://i.ibb.co/gbLrGSQv/f966.jpg', badge: '프리미엄', mandatoryPlan: '초이스 베이직(9만)', price: 2379300, publicSupport: 500000, addSupport: 350000 },
