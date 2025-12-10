@@ -92,7 +92,7 @@
         const SITE_CONFIG = {
             // 1. 기본 정보 (로고, 연락처, 링크, 프로모션 문구)
             info: {
-                logoImg: "https://i.ibb.co/6c5n22Dg/ktlogo.jpg", // KT 로고 이미지 주소
+                logoImg: "https://i.ibb.co/cXVFKzLj/ktlogo.png", // KT 로고 이미지 주소
                 logoImgSize: "h-16",      // 로고 이미지 높이 (h-8, h-10, h-12, h-16 등)
                 logoText: "",         // 로고 옆 텍스트 내용
                 logoTextSize: "text-3xl", // 로고 옆 텍스트 크기
@@ -101,7 +101,7 @@
                 kakaoUrl: "http://pf.kakao.com/_XRxaan/chat", // 카카오톡 채널 링크
                 
                 // [NEW] 프로모션 동의 문구 수정 영역
-                promotionText: "가전구독 프로모션 혜택 상담 (선택사항)",
+                promotionText: "가전구독 프로모션 혜택상담 (선택사항)",
 
                 // [보안 주의] EmailJS 대시보드 -> Security -> Whitelisted Domains 에 등록 필요
                 emailJsKey: "oM5C3k8SXXow-GN5v" 
@@ -119,26 +119,32 @@
                 images: [
                     { 
                         // 01번 이미지 세트
-                        pcImg: "https://i.ibb.co/DfFFb7KF/IMG-9783.jpg",     
-                        mobileImg: "https://i.ibb.co/7dr7KSqR/IMG-9776.jpg", 
+                        pcImg: "https://i.ibb.co/N2KdFZNR/m1-1.jpg",     
+                        mobileImg: "https://i.ibb.co/R4JrGC72/m1.jpg", 
                         url: "" 
                     },
                     { 
                         // 02번 이미지 세트
-                        pcImg: "https://i.ibb.co/kVH858jQ/IMG-9782.jpg", 
-                        mobileImg: "https://i.ibb.co/8L8V6Zm2/IMG-9777.jpg",
+                        pcImg: "https://i.ibb.co/Z1f7jqqw/m2-2.jpg", 
+                        mobileImg: "https://i.ibb.co/Tq0P5bt5/m2.png",
                         url: "" 
                     },
                     { 
                         // 03번 이미지 세트
-                        pcImg: "https://i.ibb.co/dwDwWGrN/IMG-9781.jpg", 
-                        mobileImg: "https://i.ibb.co/7NRvztDk/IMG-9778.jpg",
+                        pcImg: "https://i.ibb.co/nZPvgf4/m3-3.jpg", 
+                        mobileImg: "https://i.ibb.co/FLqqfy1B/m3.png",
                         url: "" 
                     },
                     { 
                         // 04번 이미지 세트
-                        pcImg: "https://i.ibb.co/7tD19Fxj/IMG-9780.jpg", 
-                        mobileImg: "https://i.ibb.co/dJMTVWTk/IMG-9779.jpg",
+                        pcImg: "https://i.ibb.co/Y4dtTtnT/m4-4.jpg", 
+                        mobileImg: "https://i.ibb.co/tMhDvT3z/m4.jpg",
+                        url: "" 
+                    },
+                    { 
+                        // 05번 이미지 세트 (추가됨 - 수정해서 사용하세요)
+                        pcImg: "https://i.ibb.co/RVwMSP7/m5-5.jpg", // 
+                        mobileImg: "https://i.ibb.co/tTctj2KZ/m5.png", //
                         url: "" 
                     }
                 ]
@@ -235,7 +241,7 @@
             }
         };
 
-        // 초기화 실행
+        // 초기화
         (function(){ if(window.emailjs) emailjs.init(SITE_CONFIG.info.emailJsKey); })();
     </script>
     <!-- ========================================== -->
@@ -262,6 +268,7 @@
     </header>
 
     <!-- 2. 메인 배너 (반응형 미러/블러 효과) -->
+    <!-- h-80(320px) 모바일, h-[450px] 태블릿/PC -->
     <section id="main-banner-section" class="relative w-full h-80 md:h-[450px] flex items-center justify-center overflow-hidden transition-colors duration-500 bg-gray-100">
         <!-- 슬라이드 이미지 컨테이너 -->
         <div id="banner-slider" class="absolute inset-0 w-full h-full">
@@ -428,7 +435,7 @@
                     </div>
                 </div>
 
-                <!-- [NEW] 프로모션 동의 체크박스 (빠른상담) -->
+                <!-- [NEW] 프로모션 동의 체크박스 -->
                 <div class="flex items-center gap-2 mt-2">
                     <input type="checkbox" id="fast-promo" class="w-5 h-5 text-red-600 border-gray-300 rounded focus:ring-red-500">
                     <label for="fast-promo" class="text-sm text-gray-500 cursor-pointer"></label>
@@ -507,7 +514,6 @@
                         </div>
                     </div>
                 </div>
-                
                 <div class="lg:col-span-7 pb-10 md:pb-0">
                     <form id="mobile-form" onsubmit="submitMobileOrder(event)">
                         <div id="special-condition-alert" class="hidden mb-6 bg-red-50 border-l-4 border-red-500 p-4 rounded-r-xl shadow-sm">
@@ -598,7 +604,7 @@
             document.querySelector('label[for="modal-promo"]').innerText = promoText;
         }
 
-        // 메인 배너 슬라이드 로직 (NEW)
+        // 메인 배너 슬라이드 로직
         function startMainBannerSlider() {
             const container = document.getElementById('banner-slider');
             const images = SITE_CONFIG.banner.images;
@@ -743,7 +749,7 @@
             }
             const promo = document.getElementById('fast-promo').checked ? '동의' : '미동의';
             details.push(`[마케팅수신] ${promo}`);
-            
+
             const params = {
                 name: name, phone: phone, branch: '빠른상담신청',
                 promo_item: details.join('\n'), date: new Date().toLocaleString(), manager_email: 'pbh350111@gmail.com'
@@ -922,4 +928,3 @@
     </script>
 </body>
 </html>
-
